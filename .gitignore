@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/jetbrains,java,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=jetbrains,java,react
 
+# 环境变量文件
+.env
+
+# Docker 相关
+.docker/
+
 ### Java ###
 # Compiled class file
 *.class

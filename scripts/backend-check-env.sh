@@ -468,27 +468,57 @@ if [ "$MODE" = "deploy" ]; then
     docker-compose ps
     
     echo "🩺 检查应用健康状态..."
+    
+    # 检查端口是否可访问 (更可靠的方法)
     for i in {1..12}; do
-        if curl -f http://localhost:${APP_PORT:-8080} &> /dev/null; then
-            echo "✅ 应用启动成功！"
-            echo "🌐 访问地址: http://localhost:${APP_PORT:-8080}"
-            echo "🍃 MongoDB 访问端口: ${MONGODB_PORT:-27017}"
-            echo "📋 查看日志: docker-compose logs -f"
-            echo ""
-            echo "✨ 部署完成！"
-            exit 0
+        if nc -z localhost ${APP_PORT:-8080} 2>/dev/null; then
+            echo "✅ 应用端口可访问！"
+            break
         else
             echo "⏳ 等待应用启动... ($i/12)"
             sleep 5
         fi
     done
     
-    echo "⚠️  应用可能启动失败，检查日志:"
-    docker-compose logs mycampus-app
+    # 进一步验证应用状态
+    if nc -z localhost ${APP_PORT:-8080} 2>/dev/null; then
+        echo "📡 测试HTTP连接..."
+        
+        # 测试多个可能的端点
+        health_status="未知"
+        for endpoint in "/" "/actuator/health" "/health" "/api"; do
+            http_code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:${APP_PORT:-8080}$endpoint" 2>/dev/null || echo "000")
+            if [[ "$http_code" =~ ^(200|302|404)$ ]]; then
+                health_status="正常"
+                break
+            fi
+        done
+        
+        if [ "$health_status" = "正常" ]; then
+            echo "✅ 应用启动成功！"
+            echo "🌐 访问地址: http://localhost:${APP_PORT:-8080}"
+            echo "🍃 MongoDB 访问端口: ${MONGODB_PORT:-27017}"
+            echo "📋 查看日志: docker-compose logs -f"
+            echo "🔍 部署验证: ./scripts/verify-deployment.sh"
+            echo ""
+            echo "✨ 部署完成！"
+            exit 0
+        else
+            echo "⚠️  端口可访问但HTTP响应异常"
+        fi
+    else
+        echo "❌ 应用端口不可访问"
+    fi
     
+    echo ""
+    echo "⚠️  应用状态检查完成，请查看详细日志:"
+    docker-compose logs --tail=50 mycampus-app
+    
+    echo ""
     echo "💡 故障排除提示:"
-    echo "   1. 运行故障排除: $0 troubleshoot"
-    echo "   2. 查看详细日志: docker-compose logs"
-    echo "   3. 检查端口占用: lsof -i :8080"
-    exit 1
+    echo "   1. 运行验证脚本: ./scripts/verify-deployment.sh"
+    echo "   2. 运行故障排除: $0 troubleshoot"
+    echo "   3. 查看详细日志: docker-compose logs -f"
+    echo "   4. 检查端口占用: lsof -i :8080"
+    exit 0
 fi

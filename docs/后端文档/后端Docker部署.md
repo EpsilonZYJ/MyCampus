@@ -8,6 +8,26 @@
 - Docker Compose
 - Java 17 (用于本地开发)
 
+## 脚本运行
+
+1. 后端服务部署
+
+```bash
+./scripts/backend-deploy.sh
+```
+
+2. 后端查看是否存在服务
+
+```bash
+./scripts/verify-deployment.sh
+```
+
+3. 后端服务终止
+
+```bash
+./scripts/backend-shutdown.sh
+```
+
 ## 快速开始
 
 1. **克隆项目并进入项目目录**

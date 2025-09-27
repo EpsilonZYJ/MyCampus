@@ -4,7 +4,7 @@
 services:
   # MongoDB 数据库服务
   mongodb:
-    image: ${DOCKER_REGISTRY_MIRROR}/library/mongo:7.0
+    image: mongo:5.0.5
     container_name: mycampus-mongodb
     restart: unless-stopped
     environment:

@@ -126,6 +126,7 @@ required_vars=(
     "SPRING_PROFILES_ACTIVE"
     "SERVER_PORT"
     "DOCKER_REGISTRY_MIRROR"
+    "COMPOSE_PROJECT_NAME"
 )
 
 missing_vars=()
@@ -320,7 +321,7 @@ if [ "$MODE" = "troubleshoot" ]; then
     
     # 检查Docker详细状态
     echo ""
-    echo "� Docker 详细状态:"
+    echo "Docker 详细状态:"
     if docker info &> /dev/null; then
         echo "   ✅ Docker Info 可访问"
         docker info | grep -E "(Server Version|Storage Driver|Logging Driver|Cgroup Version|Kernel Version)" | sed 's/^/      /'
@@ -388,7 +389,7 @@ echo "   Spring Profile: $SPRING_PROFILES_ACTIVE"
 
 echo ""
 if [ "$MODE" = "troubleshoot" ]; then
-    echo "�💡 故障排除建议:"
+    echo "故障排除建议:"
     echo "   1. 确保所有必需文件存在且格式正确"
     echo "   2. 检查环境变量配置，特别是密码设置"
     echo "   3. 确保端口 8080 和 27017 未被占用"

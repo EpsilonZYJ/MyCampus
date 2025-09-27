@@ -1,5 +1,5 @@
-# 指定项目名称以避免默认目录名称问题
-name: mycampus-project
+# Docker Compose 配置文件
+# 项目名称通过环境变量 COMPOSE_PROJECT_NAME 指定
 
 services:
   # MongoDB 数据库服务

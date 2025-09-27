@@ -1,0 +1,48 @@
+services:
+  # MongoDB 数据库服务
+  mongodb:
+    image: mongo:7.0
+    container_name: mycampus-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MYCAMPUS_DB_USER: ${MYCAMPUS_DB_USER}
+      MYCAMPUS_DB_PASSWORD: ${MYCAMPUS_DB_PASSWORD}
+    ports:
+      - "${MONGODB_PORT}:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    networks:
+      - mycampus-network
+
+  # Spring Boot 应用服务
+  mycampus-app:
+    build:
+      context: ./backend/MyCampus
+      dockerfile: Dockerfile
+    container_name: mycampus-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${MONGO_INITDB_DATABASE}?authSource=admin
+      SPRING_DATA_MONGODB_DATABASE: ${MONGO_INITDB_DATABASE}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      SERVER_PORT: ${SERVER_PORT}
+    depends_on:
+      - mongodb
+    networks:
+      - mycampus-network
+    volumes:
+      - ./logs:/app/logs
+
+networks:
+  mycampus-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local

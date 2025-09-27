@@ -1,7 +1,10 @@
+# Docker Compose 配置文件
+# 项目名称通过环境变量 COMPOSE_PROJECT_NAME 指定
+
 services:
   # MongoDB 数据库服务
   mongodb:
-    image: mongo:7.0
+    image: mongo:5.0.5
     container_name: mycampus-mongodb
     restart: unless-stopped
     environment:
@@ -23,6 +26,7 @@ services:
     build:
       context: ./backend/MyCampus
       dockerfile: Dockerfile
+    image: mycampus-app:latest
     container_name: mycampus-app
     restart: unless-stopped
     ports:

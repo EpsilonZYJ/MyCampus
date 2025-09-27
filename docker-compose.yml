@@ -1,7 +1,10 @@
+# 指定项目名称以避免默认目录名称问题
+name: mycampus-project
+
 services:
   # MongoDB 数据库服务
   mongodb:
-    image: mongo:7.0
+    image: ${DOCKER_REGISTRY_MIRROR}/library/mongo:7.0
     container_name: mycampus-mongodb
     restart: unless-stopped
     environment:
@@ -23,6 +26,7 @@ services:
     build:
       context: ./backend/MyCampus
       dockerfile: Dockerfile
+    image: mycampus-app:latest
     container_name: mycampus-app
     restart: unless-stopped
     ports:

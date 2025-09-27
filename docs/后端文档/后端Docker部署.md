@@ -13,7 +13,7 @@
 1. **克隆项目并进入项目目录**
 
    ```bash
-   cd /Users/zhouyujie/Developer/hust-softeware-engineering
+   cd hust-softeware-engineering
    ```
 
 2. **配置环境变量**
@@ -110,10 +110,14 @@ docker-compose down -v
 2. **内存不足**: 确保Docker有足够的内存分配
 3. **权限问题**: 确保Docker有权限访问项目目录
 
-## 生产环境部署建议
+## 关于.env文件配置
 
-1. 修改默认密码
-2. 使用环境变量文件(.env)
-3. 配置SSL/TLS
-4. 设置备份策略
-5. 配置监控和日志收集
+.env为敏感文件，请不要上传。
+
+一定需要修改的有：
+
+- MYCAMPUS_DB_PASSWORD
+- MYCAMPUS_DB_PASSWORD（两个密码）
+- DOCKER_REGISTRY_MIRROR（镜像加速器）
+
+对于端口是否需要修改，在不进行前后端联调时没有很大关系，但是最后联调时必须确定。

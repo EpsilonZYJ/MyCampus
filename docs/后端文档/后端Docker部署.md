@@ -121,3 +121,63 @@ docker-compose down -v
 - DOCKER_REGISTRY_MIRROR（镜像加速器）
 
 对于端口是否需要修改，在不进行前后端联调时没有很大关系，但是最后联调时必须确定。
+
+### 镜像加速器配置
+
+云服务器一般不能直接连接docker hub等网站，需要国内镜像加速器，然而也不代表所有国内镜像加速器都可以使用。比方说阿里云服务器只能使用阿里云的镜像加速，而且是指定的阿里云的某个镜像加速服务，而不是阿里云所有镜像加速服务都可使用。下面给出配置方法：
+
+#### 对于阿里云服务器
+
+需要阿里云容器镜像服务（ACR）的镜像加速器地址，方法如下：
+
+1. 登录阿里云控制台
+首先，访问阿里云官网并登录到你的账户，进入控制台页面。
+
+2. 进入容器镜像服务（ACR）控制台
+在控制台首页，搜索“容器镜像服务”或“Container Registry”，点击进入。
+或者，在控制台页面的“产品与服务”菜单中，找到“容器镜像服务”并点击。
+
+3. 选择实例和获取加速器地址
+进入ACR控制台后，选择你需要的实例（如果没有，请先创建一个）。
+在实例详情页面，找到“镜像加速器”或“Registry Mirror”相关选项。
+你会看到一个URL，格式通常为：https://<你的实例ID>.mirror.aliyuncs.com
+其中<你的实例ID>是ACR实例的唯一标识符，通常可以在实例详情页找到。
+
+4. 获取实例ID
+在ACR控制台中，进入你的实例详情页。
+查找“实例名称”或“实例ID”，它通常是一个字符串，如abc123。
+完整的加速器地址就是：https://abc123.mirror.aliyuncs.com（将abc123替换为你的实际实例ID）。
+
+5. 配置到 Docker
+编辑 /etc/docker/daemon.json 文件（如果没有，请创建）。
+添加如下内容，注意替换你的实例ID为实际值：
+
+```json
+{
+  "registry-mirrors": ["https://你的实例ID.mirror.aliyuncs.com"]
+}
+```
+
+6. 重启 Docker 服务
+保存文件后，运行以下命令使配置生效：
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+7. 验证配置
+使用以下命令检查配置是否生效：
+
+```bash
+docker info
+```
+
+在输出中，你应该看到Registry Mirrors部分包含了你刚添加的地址。
+
+8. 配置.env文件
+在.env文件中，找到`DOCKER_REGISTRY_MIRROR`这一项，修改值为刚添加的地址；若没找到则添加以下一行
+
+```txt
+DOCKER_REGISTRY_MIRROR=刚刚找到的地址
+```

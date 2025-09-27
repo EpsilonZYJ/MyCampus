@@ -8,6 +8,27 @@
 - Docker Compose
 - Java 17 (用于本地开发)
 
+## Docker部署快速上手
+- Linux下可以使用一键安装脚本安装Docker
+```bash
+ curl -fsSL https://github.com/tech-shrimp/docker_installer/releases/download/latest/linux.sh| bash -s docker --mirror Aliyun
+```
+- 安装后需要将当前用户加入到Docker组中，以免权限不足(必要)
+```bash
+groups  #若结果中没有Docker则进行后续操作
+sudo usermod -aG docker $USER
+newgrp docker  #手动刷新用户组，使修改生效
+```
+- 推荐在执行deploy脚本前执行以下命令来拉取docker所需的软件包(部署因网络超时失败时可采用该方案解决)
+```bash
+# 安装openjdk:17-jdk-slim
+docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/openjdk:17-jdk-slim 
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/openjdk:17-jdk-slim docker.io/library/openjdk:17-jdk-slim
+# 安装Mongo5.0.5
+docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/mongo:5.0.5 
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/mongo:5.0.5 docker.io/mongo:5.0.5
+```
+
 ## 脚本运行
 
 1. 后端服务部署

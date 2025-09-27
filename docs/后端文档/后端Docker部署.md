@@ -181,3 +181,10 @@ docker info
 ```txt
 DOCKER_REGISTRY_MIRROR=刚刚找到的地址
 ```
+
+9. 拉取mongo docker image
+为了避免在部署过程中mongo docker image无法正常拉取导致部署失败，建议在部署前先将mongo docker image拉取到本地。经过测试发现阿里云镜像上最新的版本为5.0.5，因此在首次部署时，运行前先拉取镜像，具体指令如下：
+
+```bash
+docker pull mongo:5.0.5
+```

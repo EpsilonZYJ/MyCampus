@@ -4,6 +4,9 @@
 # 环境变量文件
 .env
 
+# Vscode相关
+.vscode/
+
 # Docker 相关
 .docker/
 

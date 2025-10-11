@@ -1,39 +1,21 @@
 # hust-softeware-engineering
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+## 项目成员
 
-#### 软件架构
-软件架构说明
+| 姓名  | 学号  | 分工 | Gitee账号名 |
+| ---- | ---- | ---- | ---- |
+|丁树浩|     |前端|St4rgazer|
+|李崇玮|     |后端|Lizad39|
+|李新毅|     |前端|李新毅|
+|周煜杰|U202315400|后端|周煜杰，Yujie Zhou|
 
+## 项目描述
 
-#### 安装教程
+在华科大，许多同学既想吃食堂实惠可口的饭菜，又不想忍受高峰期排队和往返的奔波。同时，也有一部分同学希望利用空余时间通过简单的劳动赚取零花钱。我们的APP旨在搭建一个连接这两类同学的校园内部平台，一方面通过智能菜品搜索帮助同学快速找到心仪美食，另一方面通过校内众包跑腿模式，让同学能“懒在寝室吃食堂”，让跑腿同学能“顺路捎带赚点钱”，最终打造一个高效、经济、可信的校园餐饮服务新体验。
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## 相关内容导航
 
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. [NABCD文档](/docs/NABCD.md)
+2. [甘特图](/docs/GanttChart/甘特项目规划器.xlsx)
+3. [前端文档](/docs/前端文档/)
+4. [后端文档](/docs/后端文档/)

@@ -30,7 +30,7 @@ public class Dish {
      */
     private String dishName;
 
-    @Field("location")
+    @Field("restaurant")
     @NotBlank(message = "Restaurant name cannot be empty")
     /**
      * 菜品所在食堂
@@ -103,6 +103,11 @@ public class Dish {
      * 更新时间
      */
     private LocalDateTime updatedAt;
+
+    /**
+     * 是否可供应
+     */
+    private Boolean isAvailable = true;
 
     // 构造函数
     public Dish(){
@@ -224,6 +229,14 @@ public class Dish {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Boolean getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(Boolean available) {
+        isAvailable = available;
     }
 
     @Override

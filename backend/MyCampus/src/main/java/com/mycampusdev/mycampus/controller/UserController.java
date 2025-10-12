@@ -1,16 +1,32 @@
 package com.mycampusdev.mycampus.controller;
 
+import com.mycampusdev.mycampus.dto.UserRegisterRequest;
 import com.mycampusdev.mycampus.pojo.ResponseMessage;
 import com.mycampusdev.mycampus.pojo.User;
 import com.mycampusdev.mycampus.pojo.User.Address;
+import com.mycampusdev.mycampus.pojo.User.RunnerProfile;
 import com.mycampusdev.mycampus.pojo.User.RunnerStatus;
 import com.mycampusdev.mycampus.service.IUserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,9 +40,6 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-
-    // --- DTO (Data Transfer Objects) 作为静态内部类 ---
-    // 建议：在实际大型项目中，应将DTO移至单独的包中。
 
     /**
      * 用于用户登录请求的数据传输对象。
@@ -48,12 +61,12 @@ public class UserController {
 
     /**
      * 用户注册
-     * @param user 包含新用户信息，将从请求体中解析
+     * @param userRegisterRequest 包含新用户信息，将从请求体中解析
      * @return 包含创建成功的用户信息的响应
      */
     @PostMapping("/register")
-    public ResponseMessage<User> register(@Valid @RequestBody User user) {
-        User registeredUser = userService.register(user);
+    public ResponseMessage<User> register(@Valid @RequestBody UserRegisterRequest userRegisterRequest) {
+        User registeredUser = userService.register(userRegisterRequest);
         return ResponseMessage.success(registeredUser);
     }
 

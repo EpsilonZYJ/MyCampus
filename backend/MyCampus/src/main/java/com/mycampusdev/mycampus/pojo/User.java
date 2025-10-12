@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -71,12 +72,12 @@ public class User {
     /**
      * 用户头像图片的URL地址。
      */
-    private String avatarUrl;
+    private String avatarUrl = "/opt/app/images/user_avatars/default.png";
 
     /**
      * 用户在平台内的账户余额。
      */
-    private BigDecimal balance = BigDecimal.ZERO;
+    private Double balance = 0.0;
 
     /**
      * 用户的角色列表，用于权限控制。
@@ -210,11 +211,13 @@ public class User {
         /**
          * 该地址的别名或收货人姓名。
          */
+        @NotBlank(message = "收件人姓名不能为空")
         private String name;
         
         /**
          * 校区及楼栋名称，例如：东十二楼。
          */
+        @NotBlank(message = "楼栋信息不能为空")
         private String building;
         
         /**
@@ -230,6 +233,7 @@ public class User {
         /**
          * 是否为默认收货地址。
          */
+        @NotNull(message = "是否默认地址不能为null")
         private Boolean isDefault = false;
 
         public Address() {
@@ -327,8 +331,8 @@ public class User {
     public void setStudentId(String studentId) { this.studentId = studentId; }
     public String getAvatarUrl() { return avatarUrl; }
     public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
-    public BigDecimal getBalance() { return balance; }
-    public void setBalance(BigDecimal balance) { this.balance = balance; }
+    public Double getBalance() { return balance; }
+    public void setBalance(Double balance) { this.balance = balance; }
     public List<String> getRoles() { return roles; }
     public void setRoles(List<String> roles) { this.roles = roles; }
     public RunnerProfile getRunnerProfile() { return runnerProfile; }

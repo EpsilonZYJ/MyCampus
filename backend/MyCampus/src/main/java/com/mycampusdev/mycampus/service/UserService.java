@@ -1,5 +1,6 @@
 package com.mycampusdev.mycampus.service;
 
+import com.mycampusdev.mycampus.dto.UserRegisterRequest;
 import com.mycampusdev.mycampus.pojo.User;
 import com.mycampusdev.mycampus.pojo.User.Address;
 import com.mycampusdev.mycampus.pojo.User.RunnerStatus;
@@ -24,12 +25,21 @@ public class UserService implements IUserService {
     // private PasswordEncoder passwordEncoder;
 
     @Override
-    public User register(User user) {
+    public User register(UserRegisterRequest userRegisterRequest) {
         // 检查用户名或学号是否已存在
-        if (userRepository.findByUserName(user.getUserName()).isPresent() ||
-            userRepository.findByStudentId(user.getStudentId()).isPresent()) {
+        if (userRepository.findByUserName(userRegisterRequest.getUserName()).isPresent() ||
+            userRepository.findByStudentId(userRegisterRequest.getStudentId()).isPresent()) {
             throw new RuntimeException("Username or StudentID is existed");
         }
+        
+        // 将DTO转换为User实体
+        User user = new User();
+        user.setUserName(userRegisterRequest.getUserName());
+        user.setPassword(userRegisterRequest.getPassword());
+        user.setEmail(userRegisterRequest.getEmail());
+        user.setPhoneNumber(userRegisterRequest.getPhoneNumber());
+        user.setStudentId(userRegisterRequest.getStudentId());
+        
         // TODO: 对密码进行加密
         // user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);

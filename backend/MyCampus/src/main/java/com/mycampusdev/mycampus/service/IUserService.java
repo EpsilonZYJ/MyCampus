@@ -1,5 +1,6 @@
 package com.mycampusdev.mycampus.service;
 
+import com.mycampusdev.mycampus.dto.UserRegisterRequest;
 import com.mycampusdev.mycampus.pojo.User;
 import com.mycampusdev.mycampus.pojo.User.Address;
 import com.mycampusdev.mycampus.pojo.User.RunnerStatus;
@@ -13,10 +14,10 @@ public interface IUserService {
 
     /**
      * 用户注册
-     * @param user 包含注册信息的用户对象
+     * @param userRegisterRequest 包含注册信息的请求对象
      * @return 创建成功并持久化的用户对象
      */
-    User register(User user);
+    User register(UserRegisterRequest userRegisterRequest);
 
     /**
      * 用户登录

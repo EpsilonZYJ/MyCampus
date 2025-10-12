@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 /**
  * 菜品实体类,映射到MongoDB中的"tb_dish"集合
+ * 含有NotBlank字段的属性在添加时也不能为Blank
  */
 @Document(collection = "tb_dish")
 public class Dish {
@@ -40,7 +41,7 @@ public class Dish {
     @Field("image_data")
     @NotBlank(message = "Image data cannot be empty")
     /**
-     * 菜品图片数据，Base64编码
+     * 菜品图片存放路径，即/opt/app/images/dish_images/食堂名/菜品名/*.{jpg/png}
      */
     private String imageData;
 

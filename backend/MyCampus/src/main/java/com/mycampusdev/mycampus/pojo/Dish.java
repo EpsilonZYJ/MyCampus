@@ -41,7 +41,7 @@ public class Dish {
     @Field("image_data")
     @NotBlank(message = "Image data cannot be empty")
     /**
-     * 菜品图片存放路径，即/opt/app/images/dish_images/食堂名/菜品名/*.{jpg/png}
+     * 菜品图片Base64编码数据
      */
     private String imageData;
 
@@ -51,13 +51,6 @@ public class Dish {
      * 菜品图片类型（如：jpeg、png）
      */
     private String imageType;
-
-    @Field("image_name")
-    @NotBlank(message = "Image name cannot be empty")
-    /**
-     * 菜品图片名称
-     */
-    private String imageName;
 
     @Field("rating")
     @DecimalMin(value = "0.0", message = "Rating cannot be less than 0")
@@ -114,12 +107,11 @@ public class Dish {
     public Dish(){
     }
 
-    public Dish(String dishName, String restaurant, String imageData, String imageType, String imageName, Double rating, Double price, String description, String category) {
+    public Dish(String dishName, String restaurant, String imageData, String imageType, Double rating, Double price, String description, String category) {
         this.dishName = dishName;
         this.restaurant = restaurant;
         this.imageData = imageData;
         this.imageType = imageType;
-        this.imageName = imageName;
         this.rating = rating;
         this.price = price;
         this.description = description;
@@ -176,13 +168,7 @@ public class Dish {
         this.imageType = imageType;
     }
 
-    public @NotBlank(message = "Image name cannot be empty") String getImageName() {
-        return imageName;
-    }
 
-    public void setImageName(@NotBlank(message = "Image name cannot be empty") String imageName) {
-        this.imageName = imageName;
-    }
 
     public @DecimalMin(value = "0.0", message = "Rating cannot be less than 0") @DecimalMax(value = "5.0", message = "Rating cannot be more than 5") Double getRating() {
         return rating;
@@ -248,7 +234,6 @@ public class Dish {
                 ", restaurant='" + restaurant + '\'' +
                 ", imageData='" + imageData + '\'' +
                 ", imageType='" + imageType + '\'' +
-                ", imageName='" + imageName + '\'' +
                 ", rating=" + rating +
                 ", price=" + price +
                 ", description='" + description + '\'' +

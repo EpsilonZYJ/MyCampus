@@ -7,11 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -55,37 +51,19 @@ public class DishService implements IDishService {
         dish.setCategory(createDishRequest.getCategory());
         dish.setIsAvailable(createDishRequest.getIsAvailable());
         
-        // 处理图片 - 保存到文件系统并存储路径
+        // 处理图片 - 转换为Base64编码并存储
         if (createDishRequest.getImageData() != null && !createDishRequest.getImageData().isEmpty()) {
             try {
-                // 获取文件扩展名（从contentType获取）
+                // 获取图片类型
                 String contentType = createDishRequest.getImageData().getContentType();
-                String extension = contentType != null ? contentType.substring(contentType.lastIndexOf('/') + 1) : "jpg";
                 
-                // 构建目录结构：/opt/app/images/dish_images/{食堂名称}/{菜品名}/
-                String restaurantName = createDishRequest.getRestaurant().replaceAll("[\\/:*?\"<>|]", ""); // 移除非法字符
-                String currentDishName = createDishRequest.getDishName().replaceAll("[\\/:*?\"<>|]", ""); // 移除非法字符
-                String baseDir = "/opt/app/images/dish_images/" + restaurantName + "/" + currentDishName + "/";
-                
-                // 创建目录（如果不存在）
-                File directory = new File(baseDir);
-                if (!directory.exists()) {
-                    directory.mkdirs();
-                }
-                
-                // 生成文件名
-                String fileName = restaurantName + "_" + currentDishName + "." + extension;
-                String filePath = baseDir + fileName;
-                
-                // 保存文件
+                // 将图片转换为Base64编码字符串
                 byte[] imageBytes = createDishRequest.getImageData().getBytes();
-                Path destination = Paths.get(filePath);
-                Files.write(destination, imageBytes);
+                String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
                 
-                // 在数据库中存储文件路径
-                dish.setImageData(filePath);
+                // 在数据库中存储Base64编码和图片类型
+                dish.setImageData(base64Image);
                 dish.setImageType(contentType);
-                dish.setImageName(fileName);
             } catch (IOException e) {
                 throw new RuntimeException("图片处理失败: " + e.getMessage());
             }
@@ -184,9 +162,6 @@ public class DishService implements IDishService {
         if(dish.getImageType() != null) {
             existingDish.setImageType(dish.getImageType());
         }
-        if(dish.getImageName() != null) {
-            existingDish.setImageName(dish.getImageName());
-        }
         if (dish.getRating() != null) {
             existingDish.setRating(dish.getRating());
         }
@@ -257,40 +232,16 @@ public class DishService implements IDishService {
         // 处理图片更新
         if (dishRequest.getImageData() != null && !dishRequest.getImageData().isEmpty()) {
             try {
-                // 获取文件扩展名（从contentType获取）
+                // 获取图片类型
                 String contentType = dishRequest.getImageData().getContentType();
-                String extension = contentType != null ? contentType.substring(contentType.lastIndexOf('/') + 1) : "jpg";
                 
-                // 构建目录结构：/opt/app/images/dish_images/{食堂名称}/{菜品名}/
-                String restaurantName = (dishRequest.getRestaurant() != null && !dishRequest.getRestaurant().trim().isEmpty()) ? 
-                        dishRequest.getRestaurant().replaceAll("[\\/:*?\"<>|]", "") : 
-                        existingDish.getRestaurant().replaceAll("[\\/:*?\"<>|]", "");
-                
-                String currentDishName = (dishRequest.getDishName() != null && !dishRequest.getDishName().trim().isEmpty()) ? 
-                        dishRequest.getDishName().replaceAll("[\\/:*?\"<>|]", "") : 
-                        existingDish.getDishName().replaceAll("[\\/:*?\"<>|]", "");
-                
-                String baseDir = "/opt/app/images/dish_images/" + restaurantName + "/" + currentDishName + "/";
-                
-                // 创建目录（如果不存在）
-                File directory = new File(baseDir);
-                if (!directory.exists()) {
-                    directory.mkdirs();
-                }
-                
-                // 生成文件名：餐厅名_菜品名.{后缀}
-                String fileName = restaurantName + "_" + currentDishName + "." + extension;
-                String filePath = baseDir + fileName;
-                
-                // 保存文件
+                // 将图片转换为Base64编码字符串
                 byte[] imageBytes = dishRequest.getImageData().getBytes();
-                Path destination = Paths.get(filePath);
-                Files.write(destination, imageBytes);
+                String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
                 
-                // 在数据库中存储文件路径
-                existingDish.setImageData(filePath);
+                // 在数据库中存储Base64编码和图片类型
+                existingDish.setImageData(base64Image);
                 existingDish.setImageType(contentType);
-                existingDish.setImageName(fileName);
             } catch (IOException e) {
                 throw new RuntimeException("图片更新失败: " + e.getMessage());
             }
@@ -353,13 +304,8 @@ public class DishService implements IDishService {
         }
         
         try {
-            // 从文件系统读取图片
-            Path imagePath = Paths.get(dish.getImageData());
-            if (!Files.exists(imagePath)) {
-                throw new RuntimeException("图片文件不存在: " + dish.getImageData());
-            }
-            
-            byte[] imageBytes = Files.readAllBytes(imagePath);
+            // 从数据库获取Base64编码的图片数据并解码
+            byte[] imageBytes = java.util.Base64.getDecoder().decode(dish.getImageData());
             
             // 创建返回结果Map
             Map<String, Object> result = new HashMap<>();
@@ -368,8 +314,8 @@ public class DishService implements IDishService {
             result.put("contentLength", (long) imageBytes.length);
             
             return result;
-        } catch (IOException e) {
-            throw new RuntimeException("读取图片文件失败: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("读取图片数据失败: " + e.getMessage());
         }
     }
 }

@@ -59,6 +59,9 @@ public class DishController {
     @GetMapping
     public ResponseMessage<List<Dish>> getAllDishes() {
         List<Dish> dishes = dishService.getAllDishes();
+        for (Dish dish : dishes) {
+            dish.setImageData("null");
+        }
         return ResponseMessage.success(dishes);
     }
 

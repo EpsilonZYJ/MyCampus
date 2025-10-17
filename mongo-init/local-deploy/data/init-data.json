@@ -126,6 +126,39 @@
             "category": "快餐",
             "review_count": 203,
             "isAvailable": true
+        },
+        {
+            "dish_name": "猪肝粉",
+            "restaurant": "东一食堂",
+            "image_path": "imgs/pork_liver_noodle.jpg",
+            "rating": 4.3,
+            "price": 8.0,
+            "description": "新鲜猪肝搭配爽滑米粉，汤汁鲜美，营养丰富",
+            "category": "主食",
+            "review_count": 203,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "回锅肉拌面",
+            "restaurant": "东一食堂",
+            "image_path": "imgs/twice_cooked_pork_noodle.jpg",
+            "rating": 3.0,
+            "price": 11.0,
+            "description": "香辣回锅肉与劲道面条完美结合，香气扑鼻",
+            "category": "主食",
+            "review_count": 203,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "鸭脯轻食饭",
+            "restaurant": "西一食堂",
+            "image_path": "imgs/duck_breast_healthy_rice.jpg",
+            "rating": 4.3,
+            "price": 14.0,
+            "description": "低脂鸭脯肉搭配杂粮饭，健康轻食选择",
+            "category": "主食",
+            "review_count": 203,
+            "isAvailable": true
         }
     ],
     "settings": {

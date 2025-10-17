@@ -32,7 +32,8 @@ function resolvePlaceholders(val) {
 }
 
 async function readApplicationProperties() {
-    const propsPath = path.resolve(process.cwd(), 'backend', 'MyCampus', 'src', 'main', 'resources', 'application.properties');
+    const propsPath = path.resolve(process.cwd(),'backend', 'MyCampus', 'src', 'main', 'resources', 'application.properties');
+    const propsPath2 = path.resolve(process.cwd(), '../..', 'backend', 'MyCampus', 'src', 'main', 'resources', 'application.properties');
     try {
         const content = await fs.readFile(propsPath, 'utf8');
         const props = parseProperties(content);
@@ -41,8 +42,17 @@ async function readApplicationProperties() {
         }
         return props;
     } catch (error) {
-        console.warn('⚠️  无法读取 application.properties，使用默认配置');
-        return {};
+        try {
+            const content = await fs.readFile(propsPath2, 'utf8');
+            const props = parseProperties(content);
+            for (const k of Object.keys(props)) {
+                props[k] = resolvePlaceholders(props[k]);
+            }
+            return props;
+        } catch (error) {
+            console.warn('⚠️  无法读取 application.properties，使用默认配置');
+            return {};
+    }
     }
 }
 

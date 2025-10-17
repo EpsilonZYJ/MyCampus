@@ -84,10 +84,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
-    avatarUrl: {
-        type: String,
-        default: '/opt/app/images/user_avatars/default.png'
-    },
+    // avatarUrl: {
+    //     type: String,
+    //     default: '/opt/app/images/user_avatars/default.png'
+    // },
     balance: {
         type: Number,
         default: 0.0

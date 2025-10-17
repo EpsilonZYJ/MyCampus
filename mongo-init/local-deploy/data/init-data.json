@@ -6,7 +6,6 @@
             "email": "admin@hust.edu.cn",
             "phoneNumber": "13800138000",
             "student_id": "U202300001",
-            "avatarUrl": null,
             "balance": 1000000.0,
             "roles": [
                 "ROLE_STUDENT",

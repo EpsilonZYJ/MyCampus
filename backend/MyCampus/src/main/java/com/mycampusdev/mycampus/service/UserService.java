@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.management.RuntimeErrorException;
 
 @Service
 public class UserService implements IUserService {
@@ -73,8 +77,17 @@ public class UserService implements IUserService {
     public User updateUser(String id, Map<String, Object> userUpdates) {
         User user = getUserById(id);
 
+        List<String> sensitiveFields = Arrays.asList(
+            "balance", "password", "roles", "id", "createdAt", "updatedAt",
+            "lastLoginAt"
+        );
+
         userUpdates.forEach((key, value) -> {
-            // 使用反射动态更新字段
+            if (sensitiveFields.contains(key)) {
+                throw new RuntimeErrorException(null, key + "属性不允许使用该方法修改");
+            }
+            
+            // 使用反射动态更新非敏感字段
             Field field = ReflectionUtils.findField(User.class, key);
             if (field != null) {
                 // 确保可以访问私有字段
@@ -136,6 +149,39 @@ public class UserService implements IUserService {
             throw new RuntimeException("Current user is not runner");
         }
         user.getRunnerProfile().setStatus(status);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User addBalance(String userId, java.math.BigDecimal amount) {
+        User user = getUserById(userId);
+        
+        // 验证金额必须为正数
+        if (amount == null || amount.compareTo(java.math.BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Amount must be positive");
+        }
+        
+        // 增加余额
+        user.setBalance(user.getBalance().add(amount));
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User deductBalance(String userId, java.math.BigDecimal amount) {
+        User user = getUserById(userId);
+        
+        // 验证金额必须为正数
+        if (amount == null || amount.compareTo(java.math.BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Amount must be positive");
+        }
+        
+        // 检查余额是否充足
+        if (user.getBalance().compareTo(amount) < 0) {
+            throw new RuntimeException("Insufficient balance");
+        }
+        
+        // 减少余额
+        user.setBalance(user.getBalance().subtract(amount));
         return userRepository.save(user);
     }
 

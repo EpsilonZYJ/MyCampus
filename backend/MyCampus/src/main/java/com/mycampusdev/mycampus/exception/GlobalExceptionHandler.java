@@ -13,15 +13,16 @@ import com.mycampusdev.mycampus.pojo.ResponseMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@RestControllerAdvice  // Í³Ò»Òì³£´¦Àí
+@RestControllerAdvice  // ç»Ÿä¸€å¼‚å¸¸å¤„ç†
 public class GlobalExceptionHandler {
 
     Logger log = org.slf4j.LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler({Exception.class})  // Ö¸¶¨Òª´¦ÀíµÄÒì³£ÀàĞÍ(ËùÓĞµÄ)
+    @ExceptionHandler({Exception.class})  // æŒ‡å®šè¦å¤„ç†çš„å¼‚å¸¸ç±»å‹(æ‰€æœ‰çš„)
     public ResponseMessage exceptionHandler(Exception e,HttpServletRequest request,HttpServletResponse response){
-        log.error("Í³Ò»Òì³££º",e);
+        log.error("ç»Ÿä¸€å¼‚å¸¸ï¼š",e);
 
         return new ResponseMessage(500, e.getMessage(), "Internal Server Error.");
     }
+
 }

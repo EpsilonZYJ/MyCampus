@@ -38,45 +38,6 @@ public class ResponseMessage<T> {
     }
     
     /**
-     * 返回成功响应消息，并处理data对象中可能包含的ImageData属性。
-     * 如果ImageData属性为空，则在返回前将其设置为null。
-     * @param data 响应数据
-     * @param <T> 数据类型
-     * @return 处理后的ResponseMessage对象
-     */
-    public static <T> ResponseMessage<T> successWithImageDataCheck(T data) {
-        if (data != null) {
-            try {
-                // 使用反射检查data对象是否有getImageData方法
-                Class<?> clazz = data.getClass();
-                try {
-                    java.lang.reflect.Method getImageDataMethod = clazz.getMethod("getImageData");
-                    if (getImageDataMethod != null) {
-                        Object imageData = getImageDataMethod.invoke(data);
-                        // 如果ImageData属性为空，则设置为null
-                        if (imageData == null || (imageData instanceof String && ((String) imageData).trim().isEmpty())) {
-                            try {
-                                java.lang.reflect.Method setImageDataMethod = clazz.getMethod("setImageData", String.class);
-                                if (setImageDataMethod != null) {
-                                    setImageDataMethod.invoke(data, (Object) null);
-                                }
-                            } catch (NoSuchMethodException ignored) {
-                                // 如果没有setImageData方法，忽略异常
-                            }
-                        }
-                    }
-                } catch (NoSuchMethodException ignored) {
-                    // 如果没有getImageData方法，忽略异常
-                }
-            } catch (Exception e) {
-                // 捕获所有异常，避免影响正常响应
-                System.err.println("处理ImageData属性时发生错误: " + e.getMessage());
-            }
-        }
-        return new ResponseMessage<>(HttpStatus.OK.value(), "success", data);
-    }
-
-    /**
      * 获取状态码。
      * @return 状态码
      */

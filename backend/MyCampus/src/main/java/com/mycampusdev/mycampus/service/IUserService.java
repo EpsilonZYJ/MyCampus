@@ -82,4 +82,21 @@ public interface IUserService {
      * @return 更新后的用户对象
      */
     User updateRunnerStatus(String userId, RunnerStatus status);
+    
+    /**
+     * 增加用户余额（充值）
+     * @param userId 用户ID
+     * @param amount 要增加的金额
+     * @return 更新后的用户对象
+     */
+    User addBalance(String userId, java.math.BigDecimal amount);
+    
+    /**
+     * 减少用户余额（消费）
+     * @param userId 用户ID
+     * @param amount 要减少的金额
+     * @return 更新后的用户对象
+     * @throws RuntimeException 当余额不足时抛出异常
+     */
+    User deductBalance(String userId, java.math.BigDecimal amount);
 }

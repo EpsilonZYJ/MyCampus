@@ -77,7 +77,7 @@ public class User {
     /**
      * 用户在平台内的账户余额。
      */
-    private Double balance = 0.0;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     /**
      * 用户的角色列表，用于权限控制。
@@ -329,10 +329,10 @@ public class User {
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
     public String getStudentId() { return studentId; }
     public void setStudentId(String studentId) { this.studentId = studentId; }
-//    public String getAvatarUrl() { return avatarUrl; }
-//    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
-    public Double getBalance() { return balance; }
-    public void setBalance(Double balance) { this.balance = balance; }
+    public String getAvatarUrl() { return avatarUrl; }
+    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
+    public BigDecimal getBalance() { return balance; }
+    public void setBalance(BigDecimal balance) { this.balance = balance; }
     public List<String> getRoles() { return roles; }
     public void setRoles(List<String> roles) { this.roles = roles; }
     public RunnerProfile getRunnerProfile() { return runnerProfile; }

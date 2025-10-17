@@ -10,6 +10,7 @@ import com.mycampusdev.mycampus.service.IUserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,6 +155,22 @@ public class UserController {
     }
 
     /**
+     * 用于余额操作请求的数据传输对象。
+     */
+    public static class BalanceOperationRequest {
+        @NotNull(message = "Amount cannot be null")
+        private BigDecimal amount;
+        
+        public BigDecimal getAmount() {
+            return amount;
+        }
+        
+        public void setAmount(BigDecimal amount) {
+            this.amount = amount;
+        }
+    }
+    
+    /**
      * 跑腿员更新自己的在线状态
      * @param userId 跑腿员的用户ID
      * @param statusMap 包含新状态的请求体, e.g., {"status": "ONLINE"}
@@ -163,6 +180,30 @@ public class UserController {
     public ResponseMessage<User> updateRunnerStatus(@PathVariable String userId, @RequestBody Map<String, String> statusMap) {
         RunnerStatus status = RunnerStatus.valueOf(statusMap.get("status"));
         User updatedUser = userService.updateRunnerStatus(userId, status);
+        return ResponseMessage.success(updatedUser);
+    }
+    
+    /**
+     * 增加用户余额（充值）
+     * @param userId 用户ID
+     * @param request 包含充值金额的请求体
+     * @return 更新后的用户信息
+     */
+    @PostMapping("/{userId}/balance/add")
+    public ResponseMessage<User> addBalance(@PathVariable String userId, @Valid @RequestBody BalanceOperationRequest request) {
+        User updatedUser = userService.addBalance(userId, request.getAmount());
+        return ResponseMessage.success(updatedUser);
+    }
+    
+    /**
+     * 减少用户余额（消费）
+     * @param userId 用户ID
+     * @param request 包含消费金额的请求体
+     * @return 更新后的用户信息
+     */
+    @PostMapping("/{userId}/balance/deduct")
+    public ResponseMessage<User> deductBalance(@PathVariable String userId, @Valid @RequestBody BalanceOperationRequest request) {
+        User updatedUser = userService.deductBalance(userId, request.getAmount());
         return ResponseMessage.success(updatedUser);
     }
 }

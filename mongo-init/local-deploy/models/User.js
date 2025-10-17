@@ -89,7 +89,7 @@ const userSchema = new mongoose.Schema({
     //     default: '/opt/app/images/user_avatars/default.png'
     // },
     balance: {
-        type: Number,
+        type: mongoose.Schema.Types.Decimal128,
         default: 0.0
     },
     roles: {

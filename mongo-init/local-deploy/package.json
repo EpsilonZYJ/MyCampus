@@ -1,0 +1,21 @@
+{
+    "name": "mycampus-mongo-init",
+    "version": "1.0.0",
+    "description": "MongoDB initialization script for MyCampus project",
+    "main": "scripts/init-database.js",
+    "scripts": {
+        "init": "node scripts/init-database.js",
+        "init:clear": "node scripts/init-database.js --clear",
+        "init:custom": "node scripts/init-database.js data/custom-data.json",
+        "clear": "node scripts/clear-database.js"
+    },
+    "dependencies": {
+        "mongoose": "^8.0.0",
+        "dotenv": "^16.0.0"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "author": "MyCampus Dev Team",
+    "license": "MIT"
+}

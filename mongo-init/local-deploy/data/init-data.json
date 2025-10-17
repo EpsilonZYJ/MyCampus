@@ -1,0 +1,136 @@
+{
+    "users": [
+        {
+            "user_name": "admin",
+            "password": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
+            "email": "admin@hust.edu.cn",
+            "phoneNumber": "13800138000",
+            "student_id": "U202300001",
+            "avatarUrl": null,
+            "balance": 1000000.0,
+            "roles": [
+                "ROLE_STUDENT",
+                "ROLE_ADMIN"
+            ],
+            "addresses": [
+                {
+                    "name": "管理员",
+                    "building": "南一楼",
+                    "room": "101",
+                    "notes": null,
+                    "isDefault": true
+                }
+            ]
+        },
+        {
+            "user_name": "john_doe",
+            "password": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
+            "email": "john@hust.edu.cn",
+            "phoneNumber": "13800138001",
+            "student_id": "U202100101",
+            "balance": 500.5,
+            "roles": [
+                "ROLE_STUDENT"
+            ],
+            "addresses": [
+                {
+                    "name": "张三",
+                    "building": "东十二楼",
+                    "room": "301",
+                    "notes": "请在楼下自取",
+                    "isDefault": true
+                }
+            ]
+        },
+        {
+            "user_name": "runner_zhang",
+            "password": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
+            "email": "runner@hust.edu.cn",
+            "phoneNumber": "13800138002",
+            "student_id": "U202100201",
+            "balance": 800.0,
+            "roles": [
+                "ROLE_STUDENT",
+                "ROLE_RUNNER"
+            ],
+            "runnerProfile": {
+                "status": "ONLINE",
+                "rating": 4.8,
+                "totalOrdersCompleted": 156,
+                "idCardNumber": "420102199901011234",
+                "healthCertificateUrl": "/opt/app/images/certificates/health_cert_001.jpg",
+                "isVerified": true,
+                "totalEarnings": "2560.50"
+            },
+            "addresses": [
+                {
+                    "name": "李四",
+                    "building": "韵苑公寓",
+                    "room": "A501",
+                    "isDefault": true
+                }
+            ]
+        }
+    ],
+    "dishes": [
+        {
+            "dish_name": "宫保鸡丁",
+            "restaurant": "百景园食堂",
+            "image_path": "imgs/gongbao_chicken.jpg",
+            "rating": 4.5,
+            "price": 28.8,
+            "description": "经典川菜，鸡肉嫩滑，花生酥脆，麻辣鲜香",
+            "category": "川菜",
+            "review_count": 128,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "红烧肉",
+            "restaurant": "百景园食堂",
+            "image_path": "imgs/hongshao_pork.jpg",
+            "rating": 4.8,
+            "price": 35.0,
+            "description": "肥而不腻，入口即化的经典红烧肉",
+            "category": "本帮菜",
+            "review_count": 256,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "麻婆豆腐",
+            "restaurant": "东园食堂",
+            "image_path": "imgs/mapo_tofu.jpg",
+            "rating": 4.2,
+            "price": 18.0,
+            "description": "麻辣鲜香，豆腐嫩滑，经典川菜素食",
+            "category": "川菜",
+            "review_count": 89,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "鱼香肉丝",
+            "restaurant": "西园食堂",
+            "image_path": "imgs/yuxiang_pork.jpg",
+            "rating": 4.6,
+            "price": 22.0,
+            "description": "酸甜可口，色泽红润，下饭首选",
+            "category": "川菜",
+            "review_count": 167,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "黄焖鸡米饭",
+            "restaurant": "学子餐厅",
+            "image_path": "imgs/huangmen_chicken.jpg",
+            "rating": 4.3,
+            "price": 25.0,
+            "description": "鸡肉鲜嫩，汤汁浓郁，米饭软糯",
+            "category": "快餐",
+            "review_count": 203,
+            "isAvailable": true
+        }
+    ],
+    "settings": {
+        "skipExisting": true,
+        "createIndexes": true
+    }
+}

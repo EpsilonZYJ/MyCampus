@@ -69,10 +69,10 @@ public class User {
      */
     private String studentId;
     
-    /**
-     * 用户头像图片的URL地址。
-     */
-    private String avatarUrl = "/opt/app/images/user_avatars/default.png";
+//    /**
+//     * 用户头像图片的URL地址。
+//     */
+//    private String avatarUrl = "/opt/app/images/user_avatars/default.png";
 
     /**
      * 用户在平台内的账户余额。
@@ -329,8 +329,8 @@ public class User {
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
     public String getStudentId() { return studentId; }
     public void setStudentId(String studentId) { this.studentId = studentId; }
-    public String getAvatarUrl() { return avatarUrl; }
-    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
+//    public String getAvatarUrl() { return avatarUrl; }
+//    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
     public BigDecimal getBalance() { return balance; }
     public void setBalance(BigDecimal balance) { this.balance = balance; }
     public List<String> getRoles() { return roles; }

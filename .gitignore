@@ -3,6 +3,7 @@
 
 # 环境变量文件
 .env
+application.properties
 
 # Vscode相关
 .vscode/
@@ -165,3 +166,4 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains,java,react
+backend/MyCampus/src/main/resources/application.properties

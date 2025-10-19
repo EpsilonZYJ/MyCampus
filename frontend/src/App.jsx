@@ -1,11 +1,20 @@
 // frontend/src/App.jsx
 import "./App.css";
-import FoodPage from "./pages/user/FoodPage"; // ✅ 导入你的页面组件
+import { Routes, Route } from "react-router-dom";
+import FoodPage from "./pages/user/FoodPage";
+import ErrandOrderPage from "./pages/user/ErrandOrderPage";
+import RunnerOrderPage from "./pages/runner/RunnerOrderPage";
+import AdminRunnerApprovalPage from "./pages/admin/AdminRunnerApprovalPage";
 
 function App() {
   return (
     <div className="App">
-      <FoodPage />  {/* ✅ 显示美食广场页面 */}
+      <Routes>
+        <Route path="/" element={<FoodPage />} />
+        <Route path="/errand-orders" element={<ErrandOrderPage />} />
+        <Route path="/runner-orders" element={<RunnerOrderPage />} />
+        <Route path="/admin/runners" element={<AdminRunnerApprovalPage />} />
+      </Routes>
     </div>
   );
 }

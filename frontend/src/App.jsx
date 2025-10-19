@@ -1,12 +1,14 @@
-// frontend/src/App.jsx
-import "./App.css";
-import FoodPage from "./pages/user/FoodPage"; // ✅ 导入你的页面组件
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import FoodPage from "./pages/user/FoodPage";
+import UploadDishPage from "./pages/user/UploadDishPage";
 
 function App() {
   return (
-    <div className="App">
-      <FoodPage />  {/* ✅ 显示美食广场页面 */}
-    </div>
+    <Routes>
+      <Route path="/" element={<FoodPage />} />
+      <Route path="/upload-dish" element={<UploadDishPage />} />
+    </Routes>
   );
 }
 

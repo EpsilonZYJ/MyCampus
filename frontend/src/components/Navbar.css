@@ -1,0 +1,30 @@
+﻿.navbar {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #001529;
+  padding: 0 24px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.navbar-logo {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.navbar-menu {
+  flex: 1;
+  margin-left: 40px;
+}
+
+.navbar-user {
+  color: white;
+}
+
+

@@ -25,6 +25,8 @@
 
 .navbar-user {
   color: white;
+  margin-right: 30px; /* 默认可能有空隙，去掉 */
+  margin-left: -20px; /* 向左移动8px，可调 */
 }
 
 

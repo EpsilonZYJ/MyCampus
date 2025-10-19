@@ -1,0 +1,46 @@
+﻿/* dish-card.css */
+
+/* 外层容器 */
+.dish-card {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #141414; /* 深色背景，可按主题改 */
+    padding: 8px;
+  }
+  
+  /* 鼠标悬停效果 */
+  .dish-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* 菜品图片 */
+  .dish-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  /* 菜品名称 */
+  .dish-card-name {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  
+  /* 响应式布局：屏幕小于768px，一行两列 */
+  @media (max-width: 768px) {
+    .dish-card {
+      margin-bottom: 16px;
+    }
+  }
+  

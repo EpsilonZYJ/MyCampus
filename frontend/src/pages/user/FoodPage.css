@@ -1,0 +1,67 @@
+﻿.fab {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #8fc0ed;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    cursor: pointer;
+    z-index: 2000;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 260ms cubic-bezier(.2,.9,.2,1),
+                border-radius 260ms cubic-bezier(.2,.9,.2,1),
+                padding 260ms cubic-bezier(.2,.9,.2,1);
+    padding: 0;
+  }
+  
+  /* 让图标绝对居中，不受文本影响 */
+  .fab .fab-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    transition: transform 260ms;
+    pointer-events: none;
+  }
+  
+  /* 文本初始不显示、不占宽度 */
+  .fab .fab-text {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 0;
+    transition: max-width 260ms, opacity 200ms, transform 200ms;
+  }
+  
+  /* hover 展开：变成标准 flex 布局 */
+  .fab:hover,
+  .fab:focus {
+    width: 110px;
+    border-radius: 12px;
+    padding-left: 16px;
+    justify-content: flex-start;
+  }
+  
+  .fab:hover .fab-icon,
+  .fab:focus .fab-icon {
+    position: static; /* 取消 absolute */
+    transform: rotate(90deg);
+  }
+  
+  .fab:hover .fab-text,
+  .fab:focus .fab-text {
+    opacity: 1;
+    max-width: 200px;
+    margin-left: 10px;
+  }
+  

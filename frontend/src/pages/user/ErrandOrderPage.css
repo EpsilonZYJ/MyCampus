@@ -85,6 +85,36 @@
   font-size: 16px;
 }
 
+/* 权限提示 */
+.permission-notice {
+  background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(253, 203, 110, 0.3);
+}
+
+.permission-notice i {
+  font-size: 48px;
+  color: #e17055;
+  margin-bottom: 15px;
+}
+
+.permission-notice p {
+  color: #2d3436;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.permission-notice .sub-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: #636e72;
+  margin-top: 5px;
+}
+
 /* 创建表单样式 */
 .create-form-container {
   background: white;

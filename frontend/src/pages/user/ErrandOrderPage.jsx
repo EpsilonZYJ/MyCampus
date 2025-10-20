@@ -6,7 +6,7 @@ import "./ErrandOrderPage.css";
 const API_BASE_URL = "http://localhost:8080/api";
 
 export default function ErrandOrderPage() {
-  const { currentUser } = useUser();
+  const { currentUser, hasRole } = useUser();
   const [orders, setOrders] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [activeTab, setActiveTab] = useState("active"); // active: 进行中的订单, completed: 已完成/已取消
@@ -20,6 +20,9 @@ export default function ErrandOrderPage() {
     reward: "",
     notes: "",
   });
+
+  // 权限检查：只有学生角色可以访问此页面
+  const isStudent = hasRole('ROLE_STUDENT');
 
   // 当用户切换时，更新 customerId
   useEffect(() => {
@@ -229,17 +232,27 @@ export default function ErrandOrderPage() {
                 <p className="subtitle">发布需求，坐等送达</p>
               </div>
             </div>
-            <button
-              className="btn-create"
-              onClick={() => setShowCreateForm(!showCreateForm)}
-            >
-              <i className={showCreateForm ? "fa fa-times" : "fa fa-plus"}></i>
-              <span>{showCreateForm ? "取消创建" : "创建新订单"}</span>
-            </button>
+            {isStudent && (
+              <button
+                className="btn-create"
+                onClick={() => setShowCreateForm(!showCreateForm)}
+              >
+                <i className={showCreateForm ? "fa fa-times" : "fa fa-plus"}></i>
+                <span>{showCreateForm ? "取消创建" : "创建新订单"}</span>
+              </button>
+            )}
           </div>
         </div>
 
-        {showCreateForm && (
+        {!isStudent && (
+          <div className="permission-notice">
+            <i className="fa fa-info-circle"></i>
+            <p>只有学生用户可以创建跑腿订单</p>
+            <p className="sub-text">跑腿员请前往"跑腿员工作台"接单</p>
+          </div>
+        )}
+
+        {isStudent && showCreateForm && (
           <div className="create-form-container">
             <h2>创建跑腿订单</h2>
             <form onSubmit={handleSubmit} className="create-form">

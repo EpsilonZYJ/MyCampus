@@ -61,7 +61,19 @@ export default function AdminRunnerApprovalPage() {
     <>
       <Navbar />
       <div className="admin-approval-container">
-        <h1>跑腿员审核管理</h1>
+        <div className="page-header">
+          <div className="header-content">
+            <div className="title-section">
+              <div className="icon-wrapper">
+                <i className="fa fa-shield"></i>
+              </div>
+              <div className="title-text">
+                <h1>跑腿员审核</h1>
+                <p className="subtitle">审核申请，保障服务质量</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="stats-card">
           <div className="stat-item">

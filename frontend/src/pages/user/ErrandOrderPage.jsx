@@ -218,14 +218,25 @@ export default function ErrandOrderPage() {
     <>
       <Navbar />
       <div className="errand-order-container">
-        <div className="header">
-          <h1>我的跑腿订单</h1>
-          <button
-            className="btn-create"
-            onClick={() => setShowCreateForm(!showCreateForm)}
-          >
-            {showCreateForm ? "取消" : "+ 创建新订单"}
-          </button>
+        <div className="page-header">
+          <div className="header-content">
+            <div className="title-section">
+              <div className="icon-wrapper">
+                <i className="fa fa-shopping-bag"></i>
+              </div>
+              <div className="title-text">
+                <h1>跑腿订单</h1>
+                <p className="subtitle">发布需求，坐等送达</p>
+              </div>
+            </div>
+            <button
+              className="btn-create"
+              onClick={() => setShowCreateForm(!showCreateForm)}
+            >
+              <i className={showCreateForm ? "fa fa-times" : "fa fa-plus"}></i>
+              <span>{showCreateForm ? "取消创建" : "创建新订单"}</span>
+            </button>
+          </div>
         </div>
 
         {showCreateForm && (

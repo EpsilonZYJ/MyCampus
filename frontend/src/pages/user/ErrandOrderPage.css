@@ -6,32 +6,83 @@
   margin-right: auto;
 }
 
-.header {
+/* 页面标题区域 */
+.page-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 30px 40px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+}
+
+.header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  gap: 30px; /* 控制标题和按钮之间的最小间距 */
 }
 
-.header h1 {
-  color: #333;
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.icon-wrapper i {
   font-size: 28px;
+  color: white;
+}
+
+.title-text h1 {
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
   margin: 0;
+  font-weight: 400;
 }
 
 .btn-create {
-  background-color: #1890ff;
-  color: white;
+  background-color: white;
+  color: #667eea;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-create:hover {
-  background-color: #40a9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: #f8f9ff;
+}
+
+.btn-create i {
+  font-size: 16px;
 }
 
 /* 创建表单样式 */
@@ -324,6 +375,45 @@
 }
 
 @media (max-width: 768px) {
+  .errand-order-container {
+    padding: 15px;
+  }
+
+  .page-header {
+    padding: 20px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .title-section {
+    width: 100%;
+  }
+
+  .icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon-wrapper i {
+    font-size: 24px;
+  }
+
+  .title-text h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .btn-create {
+    width: 100%;
+    justify-content: center;
+  }
+
   .create-form .form-row {
     grid-template-columns: 1fr;
   }

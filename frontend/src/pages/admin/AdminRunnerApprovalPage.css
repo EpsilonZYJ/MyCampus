@@ -6,10 +6,56 @@
   margin-right: auto;
 }
 
-.admin-approval-container h1 {
-  color: #333;
-  font-size: 28px;
+/* 页面标题区域 */
+.page-header {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  border-radius: 12px;
+  padding: 30px 40px;
   margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(250, 112, 154, 0.25);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.icon-wrapper i {
+  font-size: 28px;
+  color: white;
+}
+
+.title-text h1 {
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  margin: 0;
+  font-weight: 400;
 }
 
 .stats-card {

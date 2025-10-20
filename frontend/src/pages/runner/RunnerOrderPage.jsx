@@ -127,7 +127,19 @@ export default function RunnerOrderPage() {
     <>
       <Navbar />
       <div className="runner-order-container">
-        <h1>跑腿员工作台</h1>
+        <div className="page-header">
+          <div className="header-content">
+            <div className="title-section">
+              <div className="icon-wrapper">
+                <i className="fa fa-bicycle"></i>
+              </div>
+              <div className="title-text">
+                <h1>跑腿员工作台</h1>
+                <p className="subtitle">接单赚钱，灵活自由</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="tabs">
           <button

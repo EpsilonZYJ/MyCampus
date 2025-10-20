@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import { useUser } from "../../contexts/UserContext";
 import "./RunnerOrderPage.css";
 
 const API_BASE_URL = "http://localhost:8080/api";
 
 export default function RunnerOrderPage() {
+  const { currentUser } = useUser();
   const [availableOrders, setAvailableOrders] = useState([]);
   const [myOrders, setMyOrders] = useState([]);
   const [activeTab, setActiveTab] = useState("available"); // available 或 myOrders
-  const runnerId = "675ccf20b3d6f81c3ce31dc8"; // 需要从登录状态获取
+  const runnerId = currentUser.id; // 使用当前用户的 ID
 
   useEffect(() => {
     fetchAvailableOrders();
     fetchMyOrders();
-  }, []);
+  }, [currentUser.id]);
 
   const fetchAvailableOrders = async () => {
     try {
@@ -21,7 +23,9 @@ export default function RunnerOrderPage() {
         `${API_BASE_URL}/errand-orders/status/PENDING`
       );
       const result = await response.json();
-      if (result.success) {
+      console.log('📋 可接订单响应:', result);
+      // 后端返回格式: { code: 200, message: "success", data: [...] }
+      if (result.code === 200 || response.ok) {
         setAvailableOrders(result.data);
       }
     } catch (error) {
@@ -35,7 +39,9 @@ export default function RunnerOrderPage() {
         `${API_BASE_URL}/errand-orders/runner/${runnerId}`
       );
       const result = await response.json();
-      if (result.success) {
+      console.log('📋 我的订单响应:', result);
+      // 后端返回格式: { code: 200, message: "success", data: [...] }
+      if (result.code === 200 || response.ok) {
         setMyOrders(result.data);
       }
     } catch (error) {
@@ -58,7 +64,8 @@ export default function RunnerOrderPage() {
         }
       );
       const result = await response.json();
-      if (result.success) {
+      // 后端返回格式: { code: 200, message: "success", data: {...} }
+      if (result.code === 200 || response.ok) {
         alert("接单成功！");
         fetchAvailableOrders();
         fetchMyOrders();
@@ -84,7 +91,8 @@ export default function RunnerOrderPage() {
         }
       );
       const result = await response.json();
-      if (result.success) {
+      // 后端返回格式: { code: 200, message: "success", data: {...} }
+      if (result.code === 200 || response.ok) {
         alert("状态更新成功！");
         fetchMyOrders();
       }

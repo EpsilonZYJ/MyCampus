@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import { useUser } from "../../contexts/UserContext";
 import "./ErrandOrderPage.css";
 
 const API_BASE_URL = "http://localhost:8080/api";
 
 export default function ErrandOrderPage() {
+  const { currentUser } = useUser();
   const [orders, setOrders] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [formData, setFormData] = useState({
-    customerId: "675ccf20b3d6f81c3ce31dc7", // 需要从登录状态获取
+    customerId: currentUser.id, // 使用当前用户的 ID
     title: "",
     description: "",
     pickupLocation: "",
@@ -18,18 +20,28 @@ export default function ErrandOrderPage() {
     notes: "",
   });
 
+  // 当用户切换时，更新 customerId
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      customerId: currentUser.id
+    }));
+  }, [currentUser.id]);
+
   // 获取用户的订单列表
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [currentUser.id]);
 
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        `${API_BASE_URL}/errand-orders/customer/${formData.customerId}`
+        `${API_BASE_URL}/errand-orders/customer/${currentUser.id}`
       );
       const result = await response.json();
-      if (result.success) {
+      console.log('📋 获取订单列表响应:', result);
+      // 后端返回格式: { code: 200, message: "success", data: [...] }
+      if (result.code === 200 || response.ok) {
         setOrders(result.data);
       }
     } catch (error) {
@@ -44,6 +56,12 @@ export default function ErrandOrderPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // 调试日志
+    console.log('📝 准备提交订单');
+    console.log('📤 当前用户 ID:', currentUser.id);
+    console.log('📦 表单数据:', formData);
+    
     try {
       const response = await fetch(`${API_BASE_URL}/errand-orders`, {
         method: "POST",
@@ -52,8 +70,14 @@ export default function ErrandOrderPage() {
         },
         body: JSON.stringify(formData),
       });
+      
+      console.log('📡 响应状态:', response.status);
+      
       const result = await response.json();
-      if (result.success) {
+      console.log('📬 响应结果:', result);
+      
+      // 后端返回格式: { code: 200, message: "success", data: {...} }
+      if (result.code === 200 || response.ok) {
         alert("订单创建成功！");
         setShowCreateForm(false);
         fetchOrders();
@@ -88,7 +112,7 @@ export default function ErrandOrderPage() {
         }
       );
       const result = await response.json();
-      if (result.success) {
+      if (result.code === 200 || response.ok) {
         alert("订单已取消");
         fetchOrders();
       }
@@ -118,7 +142,7 @@ export default function ErrandOrderPage() {
         }
       );
       const result = await response.json();
-      if (result.success) {
+      if (result.code === 200 || response.ok) {
         alert("订单已完成并评价成功！");
         fetchOrders();
       }

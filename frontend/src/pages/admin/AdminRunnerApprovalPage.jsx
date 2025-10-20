@@ -17,7 +17,8 @@ export default function AdminRunnerApprovalPage() {
     try {
       const response = await fetch(`${API_BASE_URL}/users/runners/pending`);
       const result = await response.json();
-      if (result.success) {
+      // 后端返回格式: { code: 200, message: "success", data: [...] }
+      if (result.code === 200 || response.ok) {
         setPendingRunners(result.data);
       }
     } catch (error) {
@@ -43,7 +44,8 @@ export default function AdminRunnerApprovalPage() {
         }
       );
       const result = await response.json();
-      if (result.success) {
+      // 后端返回格式: { code: 200, message: "success", data: {...} }
+      if (result.code === 200 || response.ok) {
         alert(`${action}成功！`);
         fetchPendingRunners();
       } else {

@@ -274,7 +274,8 @@
 }
 
 .btn-cancel,
-.btn-complete {
+.btn-complete,
+.btn-delete {
   flex: 1;
   padding: 8px 16px;
   border: none;
@@ -301,6 +302,25 @@
 
 .btn-complete:hover {
   background-color: #73d13d;
+}
+
+.btn-delete {
+  background-color: #fff;
+  color: #ff4d4f;
+  border: 1px solid #ff4d4f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-delete:hover {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.btn-delete i {
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {

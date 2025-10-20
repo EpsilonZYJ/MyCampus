@@ -152,6 +152,29 @@ export default function ErrandOrderPage() {
     }
   };
 
+  const handleDeleteOrder = async (orderId) => {
+    if (!window.confirm("确定要删除此订单吗？删除后无法恢复！")) return;
+
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/errand-orders/${orderId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      
+      if (response.ok) {
+        alert("订单已删除");
+        fetchOrders();
+      } else {
+        alert("删除订单失败");
+      }
+    } catch (error) {
+      console.error("删除订单失败:", error);
+      alert("删除订单失败");
+    }
+  };
+
   const getStatusText = (status) => {
     const statusMap = {
       PENDING: "待接单",
@@ -386,6 +409,14 @@ export default function ErrandOrderPage() {
                         onClick={() => handleCompleteOrder(order.id)}
                       >
                         确认完成
+                      </button>
+                    )}
+                    {(order.status === "COMPLETED" || order.status === "CANCELLED") && (
+                      <button
+                        className="btn-delete"
+                        onClick={() => handleDeleteOrder(order.id)}
+                      >
+                        <i className="fa fa-trash"></i> 删除订单
                       </button>
                     )}
                   </div>

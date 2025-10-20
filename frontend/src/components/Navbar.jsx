@@ -1,57 +1,109 @@
-﻿import React from "react";
-import { Layout, Menu, Dropdown, Button } from "antd";
-import { UserOutlined, DownOutlined } from "@ant-design/icons";
+﻿import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useUser } from "../contexts/UserContext";
+import { ROLES } from "../constants/roles";
 import "./Navbar.css";
 
-const { Header } = Layout;
-
 const Navbar = () => {
-const navigate = useNavigate();
-const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { currentUser, currentRole, switchRole, hasRole } = useUser();
+  const [showRoleMenu, setShowRoleMenu] = useState(false);
 
-// 菜单配置
-const menuItems = [
-  { key: "/", label: "首页" },
-  { key: "/about", label: "关于我们" },
-  { key: "/contact", label: "联系我们" },
-];
+  // 根据角色动态生成菜单
+  const getMenuItems = () => {
+    const items = [
+      { key: "/", label: "美食广场", roles: [ROLES.STUDENT, ROLES.RUNNER, ROLES.ADMIN] },
+    ];
 
-const handleMenuClick = (e) => {
-  navigate(e.key);
-};
+    // 只有学生可以创建和管理跑腿订单
+    if (hasRole(ROLES.STUDENT)) {
+      items.push({ key: "/errand-orders", label: "跑腿订单", roles: [ROLES.STUDENT] });
+    }
 
-const userMenu = (
-  <Menu
-    items={[
-      { key: "profile", label: "个人中心" },
-      { key: "settings", label: "设置" },
-      { type: "divider" },
-      { key: "logout", label: "退出登录" },
-    ]}
-  />
-);
+    // 跑腿员和管理员可以看到跑腿员工作台
+    if (hasRole(ROLES.RUNNER) || hasRole(ROLES.ADMIN)) {
+      items.push({ key: "/runner-orders", label: "跑腿员工作台", roles: [ROLES.RUNNER, ROLES.ADMIN] });
+    }
 
-return (
-  <Header className="navbar">
-    <div className="navbar-logo">MyWebsite</div>
+    // 只有管理员可以看到跑腿员审核
+    if (hasRole(ROLES.ADMIN)) {
+      items.push({ key: "/admin/runners", label: "跑腿员审核", roles: [ROLES.ADMIN] });
+    }
 
-    <Menu
-      theme="dark"
-      mode="horizontal"
-      selectedKeys={[location.pathname]}
-      items={menuItems}
-      onClick={handleMenuClick}
-      className="navbar-menu"
-    />
+    return items;
+  };
 
-    <Dropdown overlay={userMenu} placement="bottomRight">
-      <Button type="text" icon={<UserOutlined />} className="navbar-user">
-        用户 <DownOutlined />
-      </Button>
-    </Dropdown>
-  </Header>
-);
+  const menuItems = getMenuItems();
+
+  const handleMenuClick = (path) => {
+    navigate(path);
+  };
+
+  const handleRoleSwitch = (role) => {
+    switchRole(role);
+    setShowRoleMenu(false);
+    // 切换角色后跳转到首页
+    navigate("/");
+  };
+
+  return (
+    <header className="navbar">
+      <div className="navbar-logo">MyCampus 校园服务</div>
+
+      <nav className="navbar-menu">
+        {menuItems.map((item) => (
+          <button
+            key={item.key}
+            className={`menu-item ${
+              location.pathname === item.key ? "active" : ""
+            }`}
+            onClick={() => handleMenuClick(item.key)}
+          >
+            {item.label}
+          </button>
+        ))}
+      </nav>
+
+      <div className="navbar-user">
+        <div 
+          className="user-info"
+          onClick={() => setShowRoleMenu(!showRoleMenu)}
+        >
+          <i className="fa fa-user-circle"></i>
+          <span>{currentUser.userName}</span>
+          <i className="fa fa-caret-down"></i>
+        </div>
+
+        {showRoleMenu && (
+          <div className="role-menu">
+            <div className="role-menu-header">切换角色</div>
+            <button
+              className={`role-item ${currentRole === ROLES.STUDENT ? 'active' : ''}`}
+              onClick={() => handleRoleSwitch(ROLES.STUDENT)}
+            >
+              <i className="fa fa-user"></i>
+              <span>普通学生</span>
+            </button>
+            <button
+              className={`role-item ${currentRole === ROLES.RUNNER ? 'active' : ''}`}
+              onClick={() => handleRoleSwitch(ROLES.RUNNER)}
+            >
+              <i className="fa fa-bicycle"></i>
+              <span>跑腿员</span>
+            </button>
+            <button
+              className={`role-item ${currentRole === ROLES.ADMIN ? 'active' : ''}`}
+              onClick={() => handleRoleSwitch(ROLES.ADMIN)}
+            >
+              <i className="fa fa-shield"></i>
+              <span>管理员</span>
+            </button>
+          </div>
+        )}
+      </div>
+    </header>
+  );
 };
 
 export default Navbar;

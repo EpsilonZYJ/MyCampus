@@ -1,15 +1,16 @@
 package com.mycampusdev.mycampus.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.mycampusdev.mycampus.pojo.ErrandOrder;
 import com.mycampusdev.mycampus.pojo.ErrandOrder.OrderStatus;
 import com.mycampusdev.mycampus.pojo.User;
 import com.mycampusdev.mycampus.repository.ErrandOrderRepository;
 import com.mycampusdev.mycampus.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 跑腿订单服务实现类
@@ -25,15 +26,33 @@ public class ErrandOrderService implements IErrandOrderService {
 
     @Override
     public ErrandOrder createOrder(ErrandOrder order) {
+        // 添加调试日志
+        System.out.println("=== ErrandOrderService.createOrder Debug ===");
+        System.out.println("Received customerId: " + order.getCustomerId());
+        System.out.println("CustomerId type: " + order.getCustomerId().getClass().getName());
+        System.out.println("CustomerId length: " + order.getCustomerId().length());
+        
         // 验证客户是否存在
+        System.out.println("Searching for user in repository...");
         User customer = userRepository.findById(order.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+                .orElseThrow(() -> {
+                    System.out.println("ERROR: Customer not found!");
+                    return new RuntimeException("Customer not found");
+                });
+        
+        System.out.println("Customer found: " + customer.getUserName());
         
         // 设置客户姓名
         order.setCustomerName(customer.getUserName());
+        System.out.println("Set customerName to: " + order.getCustomerName());
         order.setStatus(OrderStatus.PENDING);
         
-        return errandOrderRepository.save(order);
+        ErrandOrder savedOrder = errandOrderRepository.save(order);
+        System.out.println("Order saved with ID: " + savedOrder.getId());
+        System.out.println("Saved order customerName: " + savedOrder.getCustomerName());
+        System.out.println("=== End Debug ===");
+        
+        return savedOrder;
     }
 
     @Override

@@ -1,11 +1,12 @@
 package com.mycampusdev.mycampus.repository;
 
-import com.mycampusdev.mycampus.pojo.ErrandOrder;
-import com.mycampusdev.mycampus.pojo.ErrandOrder.OrderStatus;
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.mycampusdev.mycampus.pojo.ErrandOrder;
+import com.mycampusdev.mycampus.pojo.ErrandOrder.OrderStatus;
 
 /**
  * 跑腿订单数据访问层接口，继承MongoRepository以获得基础的CRUD功能。

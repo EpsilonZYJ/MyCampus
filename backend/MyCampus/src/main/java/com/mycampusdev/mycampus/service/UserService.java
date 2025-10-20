@@ -185,6 +185,35 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public List<User> getPendingRunners() {
+        // 查找所有拥有跑腿员角色但未认证的用户
+        return userRepository.findAll().stream()
+                .filter(user -> user.isRunner() && 
+                               user.getRunnerProfile() != null && 
+                               !user.getRunnerProfile().getVerified())
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Override
+    public User approveRunner(String userId, Boolean approved) {
+        User user = getUserById(userId);
+        
+        if (!user.isRunner() || user.getRunnerProfile() == null) {
+            throw new RuntimeException("User is not a runner applicant");
+        }
+        
+        if (approved) {
+            user.getRunnerProfile().setVerified(true);
+        } else {
+            // 如果拒绝，移除跑腿员角色和档案
+            user.removeRole(User.ROLE_RUNNER);
+            user.setRunnerProfile(null);
+        }
+        
+        return userRepository.save(user);
+    }
+
     /**
      * 内部辅助方法，用于根据ID获取用户，如果找不到则抛出标准异常。
      * @param id 用户ID

@@ -99,4 +99,18 @@ public interface IUserService {
      * @throws RuntimeException 当余额不足时抛出异常
      */
     User deductBalance(String userId, java.math.BigDecimal amount);
+    
+    /**
+     * 获取所有待审核的跑腿员列表
+     * @return 待审核的跑腿员用户列表
+     */
+    java.util.List<User> getPendingRunners();
+    
+    /**
+     * 管理员审核跑腿员申请
+     * @param userId 跑腿员用户ID
+     * @param approved 是否批准
+     * @return 更新后的用户对象
+     */
+    User approveRunner(String userId, Boolean approved);
 }

@@ -1,9 +1,9 @@
 package com.mycampusdev.mycampus.service;
 
+import java.util.List;
+
 import com.mycampusdev.mycampus.pojo.ErrandOrder;
 import com.mycampusdev.mycampus.pojo.ErrandOrder.OrderStatus;
-
-import java.util.List;
 
 /**
  * 跑腿订单服务接口，定义业务逻辑方法。

@@ -206,4 +206,27 @@ public class UserController {
         User updatedUser = userService.deductBalance(userId, request.getAmount());
         return ResponseMessage.success(updatedUser);
     }
+    
+    /**
+     * 获取所有待审核的跑腿员列表（管理员功能）
+     * GET /api/users/runners/pending
+     */
+    @GetMapping("/runners/pending")
+    public ResponseMessage<List<User>> getPendingRunners() {
+        List<User> pendingRunners = userService.getPendingRunners();
+        return ResponseMessage.success(pendingRunners);
+    }
+    
+    /**
+     * 管理员审核跑腿员申请
+     * POST /api/users/{userId}/runners/approve
+     */
+    @PostMapping("/{userId}/runners/approve")
+    public ResponseMessage<User> approveRunner(
+            @PathVariable String userId, 
+            @RequestBody Map<String, Boolean> request) {
+        Boolean approved = request.get("approved");
+        User updatedUser = userService.approveRunner(userId, approved);
+        return ResponseMessage.success(updatedUser);
+    }
 }

@@ -103,6 +103,46 @@
   margin-bottom: 20px;
 }
 
+/* 标签页样式 */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+  position: relative;
+  bottom: -2px;
+}
+
+.tab-button:hover {
+  color: #1890ff;
+  background-color: #f0f7ff;
+}
+
+.tab-button.active {
+  color: #1890ff;
+  border-bottom-color: #1890ff;
+  background-color: #f0f7ff;
+}
+
+/* 订单列表样式 */
+.orders-list h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
 .empty-message {
   text-align: center;
   color: #999;

@@ -9,6 +9,7 @@ export default function ErrandOrderPage() {
   const { currentUser } = useUser();
   const [orders, setOrders] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [activeTab, setActiveTab] = useState("active"); // active: 进行中的订单, completed: 已完成/已取消
   const [formData, setFormData] = useState({
     customerId: currentUser.id, // 使用当前用户的 ID
     title: "",
@@ -173,6 +174,23 @@ export default function ErrandOrderPage() {
     return classMap[status] || "";
   };
 
+  // 根据标签页过滤订单
+  const getFilteredOrders = () => {
+    if (activeTab === "active") {
+      // 进行中的订单：待接单、已接单、配送中
+      return orders.filter(order => 
+        ["PENDING", "ACCEPTED", "IN_PROGRESS"].includes(order.status)
+      );
+    } else {
+      // 已完成的订单：已完成、已取消
+      return orders.filter(order => 
+        ["COMPLETED", "CANCELLED"].includes(order.status)
+      );
+    }
+  };
+
+  const filteredOrders = getFilteredOrders();
+
   return (
     <>
       <Navbar />
@@ -288,12 +306,31 @@ export default function ErrandOrderPage() {
         )}
 
         <div className="orders-list">
-          <h2>订单列表</h2>
-          {orders.length === 0 ? (
-            <p className="empty-message">暂无订单</p>
+          <h2>我的订单</h2>
+          
+          {/* 标签页导航 */}
+          <div className="tabs">
+            <button
+              className={`tab-button ${activeTab === "active" ? "active" : ""}`}
+              onClick={() => setActiveTab("active")}
+            >
+              进行中 ({orders.filter(o => ["PENDING", "ACCEPTED", "IN_PROGRESS"].includes(o.status)).length})
+            </button>
+            <button
+              className={`tab-button ${activeTab === "completed" ? "active" : ""}`}
+              onClick={() => setActiveTab("completed")}
+            >
+              已完成 ({orders.filter(o => ["COMPLETED", "CANCELLED"].includes(o.status)).length})
+            </button>
+          </div>
+
+          {filteredOrders.length === 0 ? (
+            <p className="empty-message">
+              {activeTab === "active" ? "暂无进行中的订单" : "暂无已完成的订单"}
+            </p>
           ) : (
             <div className="orders-grid">
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <div key={order.id} className="order-card">
                   <div className="order-header">
                     <span className="order-number">{order.orderNumber}</span>

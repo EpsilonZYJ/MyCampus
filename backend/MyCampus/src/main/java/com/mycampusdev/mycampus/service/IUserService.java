@@ -1,11 +1,11 @@
 package com.mycampusdev.mycampus.service;
 
+import java.util.Map;
+
 import com.mycampusdev.mycampus.dto.UserRegisterRequest;
 import com.mycampusdev.mycampus.pojo.User;
 import com.mycampusdev.mycampus.pojo.User.Address;
 import com.mycampusdev.mycampus.pojo.User.RunnerStatus;
-
-import java.util.Map;
 
 /**
  * 用户服务的接口，定义了用户模块所需的所有业务方法。

@@ -1,14 +1,5 @@
 package com.mycampusdev.mycampus.service;
 
-import com.mycampusdev.mycampus.dto.UserRegisterRequest;
-import com.mycampusdev.mycampus.pojo.User;
-import com.mycampusdev.mycampus.pojo.User.Address;
-import com.mycampusdev.mycampus.pojo.User.RunnerStatus;
-import com.mycampusdev.mycampus.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
-
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,6 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.management.RuntimeErrorException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
+
+import com.mycampusdev.mycampus.dto.UserRegisterRequest;
+import com.mycampusdev.mycampus.pojo.User;
+import com.mycampusdev.mycampus.pojo.User.Address;
+import com.mycampusdev.mycampus.pojo.User.RunnerStatus;
+import com.mycampusdev.mycampus.repository.UserRepository;
 
 @Service
 public class UserService implements IUserService {

@@ -10,7 +10,7 @@ import {
   getDishesByCategory,
   getDishesByRestaurant,
   searchDishes,
-} from "../../api/dish";
+} from "../../api/MockDish";
 
 const { Option } = Select;
 
@@ -67,66 +67,71 @@ export default function FoodPage() {
   const startIndex = (currentPage - 1) * pageSize;
   const currentDishes = dishes.slice(startIndex, startIndex + pageSize);
 
+  // 导航栏 64 + 筛选栏高度约 60
+  const topOffset = 64 + 60;
+
   return (
     <>
       <Navbar />
 
-      {/* 筛选区域 - 固定在导航栏下方右上角 */}
+      {/* 筛选栏 - 固定在导航栏下方，靠右 */}
       <div
         style={{
           position: "fixed",
-          top: "64px", // 导航栏高度
-          right: "20px",
+          top: 64,
+          left: 0,
+          right: 0,
+          height: "60px",
+          backgroundColor: "#ffffff", // 整条白色背景
           display: "flex",
-          gap: "10px",
+          justifyContent: "flex-end", // 靠右
+          alignItems: "center",
+          paddingRight: "20px", // 右侧留空
           zIndex: 1000,
         }}
       >
-        <Select
-          placeholder="选择分类"
-          style={{ width: 150 ,top: 20}}
-          allowClear
-          value={categoryFilter}
-          onChange={(value) => setCategoryFilter(value)}
-        >
-          <Option value="川菜">川菜</Option>
-          <Option value="粤菜">粤菜</Option>
-          <Option value="湘菜">湘菜</Option>
-          <Option value="鲁菜">鲁菜</Option>
-        </Select>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Select
+            placeholder="选择分类"
+            style={{ width: 150 }}
+            allowClear
+            value={categoryFilter}
+            onChange={(value) => setCategoryFilter(value)}
+          >
+            <Option value="川菜">川菜</Option>
+            <Option value="粤菜">粤菜</Option>
+            <Option value="湘菜">湘菜</Option>
+            <Option value="鲁菜">鲁菜</Option>
+          </Select>
 
-        <Select
-          placeholder="选择餐厅"
-          style={{ width: 150 ,top: 20}}
-          allowClear
-          value={restaurantFilter}
-          onChange={(value) => setRestaurantFilter(value)}
-        >
-          <Option value="餐厅A">餐厅A</Option>
-          <Option value="餐厅B">餐厅B</Option>
-          <Option value="餐厅C">餐厅C</Option>
-        </Select>
+          <Select
+            placeholder="选择餐厅"
+            style={{ width: 150 }}
+            allowClear
+            value={restaurantFilter}
+            onChange={(value) => setRestaurantFilter(value)}
+          >
+            <Option value="餐厅A">餐厅A</Option>
+            <Option value="餐厅B">餐厅B</Option>
+            <Option value="餐厅C">餐厅C</Option>
+          </Select>
 
-        <Input
-          placeholder="搜索菜品"
-          style={{ width: 200 ,top: 20}}
-          value={searchKeyword}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-          onPressEnter={handleFilter}
-        />
+          <Input
+            placeholder="搜索菜品"
+            style={{ width: 200 }}
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            onPressEnter={handleFilter}
+          />
 
-        <Button
-          type="primary"
-          onClick={handleFilter}
-          style={{ top: 20 }}
-        >
-          筛选
-        </Button>
-
+          <Button type="primary" onClick={handleFilter}>
+            筛选
+          </Button>
+        </div>
       </div>
 
-      {/* 页面内容 */}
-      <div style={{ marginTop: "64px", padding: "20px", color: "white" }}>
+      {/* 页面内容 - 留出筛选栏空间 */}
+      <div style={{ marginTop: `${topOffset}px`, padding: "20px", color: "white" }}>
         <Row gutter={[16, 16]}>
           {currentDishes.map((dish) => (
             <Col span={6} key={dish.id}>

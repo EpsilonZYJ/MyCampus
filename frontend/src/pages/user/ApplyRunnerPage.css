@@ -188,6 +188,7 @@
   margin-top: 6px;
   color: #999;
   font-size: 13px;
+  max-width: 600px; /* 与输入框对齐 */
 }
 
 /* 表单操作按钮 */
@@ -197,11 +198,13 @@
   margin-top: 30px;
   padding-top: 20px;
   border-top: 2px solid #f0f0f0;
+  max-width: 600px; /* 与输入框对齐 */
 }
 
 .btn-cancel,
 .btn-submit {
   flex: 1;
+  max-width: 200px; /* 限制按钮最大宽度 */
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
@@ -275,5 +278,16 @@
 
   .form-actions {
     flex-direction: column;
+    max-width: 100%; /* 移动端全宽 */
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    max-width: 100%; /* 移动端按钮全宽 */
+  }
+
+  .form-group input,
+  .hint {
+    max-width: 100%; /* 移动端输入框和提示全宽 */
   }
 }

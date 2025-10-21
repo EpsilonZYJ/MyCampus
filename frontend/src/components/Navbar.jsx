@@ -10,24 +10,26 @@ const Navbar = () => {
   const { currentUser, currentRole, switchRole, hasRole } = useUser();
   const [showRoleMenu, setShowRoleMenu] = useState(false);
 
-  // 根据角色动态生成菜单
+  // 根据当前激活的角色动态生成菜单
   const getMenuItems = () => {
     const items = [
       { key: "/", label: "美食广场", roles: [ROLES.STUDENT, ROLES.RUNNER, ROLES.ADMIN] },
     ];
 
-    // 只有学生可以创建和管理跑腿订单
-    if (hasRole(ROLES.STUDENT)) {
+    // 只有当前角色是学生时才显示学生专属菜单
+    if (currentRole === ROLES.STUDENT) {
       items.push({ key: "/errand-orders", label: "跑腿订单", roles: [ROLES.STUDENT] });
+      items.push({ key: "/apply-runner", label: "申请跑腿员", roles: [ROLES.STUDENT] });
     }
 
-    // 跑腿员和管理员可以看到跑腿员工作台
-    if (hasRole(ROLES.RUNNER) || hasRole(ROLES.ADMIN)) {
-      items.push({ key: "/runner-orders", label: "跑腿员工作台", roles: [ROLES.RUNNER, ROLES.ADMIN] });
+    // 只有当前角色是跑腿员时才显示跑腿员工作台
+    if (currentRole === ROLES.RUNNER) {
+      items.push({ key: "/runner-orders", label: "跑腿员工作台", roles: [ROLES.RUNNER] });
     }
 
-    // 只有管理员可以看到跑腿员审核
-    if (hasRole(ROLES.ADMIN)) {
+    // 只有当前角色是管理员时才显示管理员菜单
+    if (currentRole === ROLES.ADMIN) {
+      items.push({ key: "/runner-orders", label: "跑腿员工作台", roles: [ROLES.ADMIN] });
       items.push({ key: "/admin/runners", label: "跑腿员审核", roles: [ROLES.ADMIN] });
     }
 

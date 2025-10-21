@@ -42,6 +42,8 @@
 .menu-item:hover {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
+  margin-right: 30px; /* 默认可能有空隙，去掉 */
+  margin-left: -20px; /* 向左移动8px，可调 */
 }
 
 .menu-item.active {

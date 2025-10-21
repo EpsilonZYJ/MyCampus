@@ -87,7 +87,7 @@ export default function FoodPage() {
           justifyContent: "flex-end", // 靠右
           alignItems: "center",
           paddingRight: "20px", // 右侧留空
-          zIndex: 1000,
+          zIndex: 999, // 降低 z-index，确保在导航栏下拉菜单下方
         }}
       >
         <div style={{ display: "flex", gap: "10px" }}>

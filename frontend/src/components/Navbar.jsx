@@ -12,12 +12,11 @@ const Navbar = () => {
 
   // 根据当前激活的角色动态生成菜单
   const getMenuItems = () => {
-    const items = [
-      { key: "/", label: "美食广场", roles: [ROLES.STUDENT, ROLES.RUNNER, ROLES.ADMIN] },
-    ];
+    const items = [];
 
     // 只有当前角色是学生时才显示学生专属菜单
     if (currentRole === ROLES.STUDENT) {
+      items.push({ key: "/", label: "美食广场", roles: [ROLES.STUDENT] });
       items.push({ key: "/errand-orders", label: "跑腿订单", roles: [ROLES.STUDENT] });
       items.push({ key: "/apply-runner", label: "申请跑腿员", roles: [ROLES.STUDENT] });
     }
@@ -29,7 +28,6 @@ const Navbar = () => {
 
     // 只有当前角色是管理员时才显示管理员菜单
     if (currentRole === ROLES.ADMIN) {
-      items.push({ key: "/runner-orders", label: "跑腿员工作台", roles: [ROLES.ADMIN] });
       items.push({ key: "/admin/runners", label: "跑腿员审核", roles: [ROLES.ADMIN] });
     }
 
@@ -45,8 +43,15 @@ const Navbar = () => {
   const handleRoleSwitch = (role) => {
     switchRole(role);
     setShowRoleMenu(false);
-    // 切换角色后跳转到首页
-    navigate("/");
+    
+    // 切换角色后跳转到该角色的默认页面
+    if (role === ROLES.STUDENT) {
+      navigate("/");
+    } else if (role === ROLES.RUNNER) {
+      navigate("/runner-orders");
+    } else if (role === ROLES.ADMIN) {
+      navigate("/admin/runners");
+    }
   };
 
   return (

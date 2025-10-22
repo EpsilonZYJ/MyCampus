@@ -60,6 +60,7 @@ export default function DishCard({ dish, onUpdate }) {
           />
           <p>分类：{dish.category || "未分类"}</p>
           <p>餐厅：{dish.restaurant || "未知"}</p>
+          <p>描述：{dish.description || "暂无"}</p>
 
           {/* 当前平均分 */}
           <p style={{ marginTop: "12px" }}>

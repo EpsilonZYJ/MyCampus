@@ -111,9 +111,9 @@ export default function FoodPage() {
             value={restaurantFilter}
             onChange={(value) => setRestaurantFilter(value)}
           >
-            <Option value="餐厅A">餐厅A</Option>
-            <Option value="餐厅B">餐厅B</Option>
-            <Option value="餐厅C">餐厅C</Option>
+            <Option value="东一食堂">东一食堂</Option>
+            <Option value="东三食堂">东三食堂</Option>
+            <Option value="百景园食堂">百景园食堂</Option>
           </Select>
 
           <Input
@@ -132,7 +132,7 @@ export default function FoodPage() {
 
       {/* 页面内容 - 留出筛选栏空间 */}
       <div style={{ marginTop: `${topOffset}px`, padding: "20px", color: "white" }}>
-        <Row gutter={[16, 16]}>
+        <Row key={currentPage} gutter={[16, 16]}>
           {currentDishes.map((dish) => (
             <Col span={6} key={dish.id}>
               <DishCard dish={dish} />

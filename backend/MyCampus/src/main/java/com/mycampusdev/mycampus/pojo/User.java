@@ -1,20 +1,19 @@
 package com.mycampusdev.mycampus.pojo;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 用户实体类，映射到MongoDB的 "tb_user" 集合。
@@ -35,7 +34,6 @@ public class User {
      */
     private String id;
 
-    @Field("user_name")
     @Indexed(unique = true)
     @NotBlank(message = "Username cannot be empty")
     /**
@@ -61,7 +59,6 @@ public class User {
      */
     private String phoneNumber;
 
-    @Field("student_id")
     @Indexed(unique = true)
     @NotBlank(message = "StudentID cannot be empty")
     /**

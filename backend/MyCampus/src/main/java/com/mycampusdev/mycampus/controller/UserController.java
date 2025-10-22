@@ -1,34 +1,30 @@
 package com.mycampusdev.mycampus.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.mycampusdev.mycampus.dto.UserRegisterRequest;
 import com.mycampusdev.mycampus.pojo.ResponseMessage;
 import com.mycampusdev.mycampus.pojo.User;
 import com.mycampusdev.mycampus.pojo.User.Address;
-import com.mycampusdev.mycampus.pojo.User.RunnerProfile;
 import com.mycampusdev.mycampus.pojo.User.RunnerStatus;
 import com.mycampusdev.mycampus.service.IUserService;
+
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 用户模块的控制器，负责处理与用户相关的HTTP请求。
@@ -204,6 +200,29 @@ public class UserController {
     @PostMapping("/{userId}/balance/deduct")
     public ResponseMessage<User> deductBalance(@PathVariable String userId, @Valid @RequestBody BalanceOperationRequest request) {
         User updatedUser = userService.deductBalance(userId, request.getAmount());
+        return ResponseMessage.success(updatedUser);
+    }
+    
+    /**
+     * 获取所有待审核的跑腿员列表（管理员功能）
+     * GET /api/users/runners/pending
+     */
+    @GetMapping("/runners/pending")
+    public ResponseMessage<List<User>> getPendingRunners() {
+        List<User> pendingRunners = userService.getPendingRunners();
+        return ResponseMessage.success(pendingRunners);
+    }
+    
+    /**
+     * 管理员审核跑腿员申请
+     * POST /api/users/{userId}/runners/approve
+     */
+    @PostMapping("/{userId}/runners/approve")
+    public ResponseMessage<User> approveRunner(
+            @PathVariable String userId, 
+            @RequestBody Map<String, Boolean> request) {
+        Boolean approved = request.get("approved");
+        User updatedUser = userService.approveRunner(userId, approved);
         return ResponseMessage.success(updatedUser);
     }
 }

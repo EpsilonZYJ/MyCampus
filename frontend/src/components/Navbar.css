@@ -1,0 +1,173 @@
+﻿.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: #1890ff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.navbar-logo {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+
+.menu-item {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 16px;
+  padding: 8px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  margin-right: 30px; /* 默认可能有空隙，去掉 */
+  margin-left: -20px; /* 向左移动8px，可调 */
+}
+
+.menu-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 16px;
+  position: relative;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.user-info:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-user i.fa-user-circle {
+  font-size: 24px;
+}
+
+.navbar-user i.fa-caret-down {
+  font-size: 14px;
+}
+
+/* 角色切换菜单 */
+.role-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  z-index: 1100; /* 提高 z-index 确保在所有内容之上 */
+  overflow: hidden;
+}
+
+.role-menu-header {
+  padding: 12px 16px;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 13px;
+  font-weight: 600;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.role-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: left;
+}
+
+.role-item:hover {
+  background-color: #f5f5f5;
+}
+
+.role-item.active {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.role-item i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.role-item.active i {
+  color: #1890ff;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 15px;
+  }
+
+  .navbar-menu {
+    gap: 4px;
+  }
+
+  .menu-item {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .navbar-logo {
+    font-size: 16px;
+  }
+
+  .user-info {
+    padding: 6px 12px;
+  }
+
+  .user-info span {
+    display: none;
+  }
+
+  .role-menu {
+    right: -10px;
+  }
+}
+
+

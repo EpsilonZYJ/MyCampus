@@ -160,6 +160,318 @@
             "review_count": 203,
             "isAvailable": true
         },
+
+
+        {
+            "dish_name": "牛肉拌饭",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/beef_bibimbap.jpg",
+            "rating": 4.3,
+            "price": 14.0,
+            "description": "鲜嫩牛肉与多豆腐土豆丝，淋上特制酱料拌匀，营养均衡，口感丰富",
+            "category": "主食",
+            "review_count": 128,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "鸡柳盖饭",
+            "restaurant": "集锦园食堂一楼",
+            "image_path": "imgs/chicken_fillet_rice.jpg",
+            "rating": 4.1,
+            "price": 12.0,
+            "description": "现象的炒鸡柳铺在热腾腾的米饭上，搭配青椒和酱汁，简单美味",
+            "category": "主食",
+            "review_count": 95,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "过桥米线",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/cross_bridge_rice_noodles.jpg",
+            "rating": 4.5,
+            "price": 11.5,
+            "description": "云南特色美食，滚烫高汤现场浇入米线，配以多种鲜美食材，汤鲜味美",
+            "category": "主食",
+            "review_count": 156,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "白切鸡盖饭",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/white_cut_chicken_rice.jpg",
+            "rating": 4.0,
+            "price": 11.0,
+            "description": "鲜嫩白切鸡搭配姜葱酱料，鸡肉原汁原味，清淡爽口",
+            "category": "主食",
+            "review_count": 87,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "大盘鸡拌面",
+            "restaurant": "西一食堂二楼清真食堂",
+            "image_path": "imgs/big_plate_chicken_noodles.jpg",
+            "rating": 4.4,
+            "price": 12.0,
+            "description": "新疆风味大盘鸡，鸡肉鲜嫩，土豆软糯，宽面筋道，香辣可口",
+            "category": "主食",
+            "review_count": 112,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "银耳汤",
+            "restaurant": "西二食堂二楼",
+            "image_path": "imgs/snow_fungus_soup.jpg",
+            "rating": 4.2,
+            "price": 2.5,
+            "description": "清甜爽口的银耳汤，银耳软糯，汤汁清甜，营养滋润",
+            "category": "汤",
+            "review_count": 203,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "石锅土豆鸡",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/stone_pot_potato_chicken.jpg",
+            "rating": 4.3,
+            "price": 9.5,
+            "description": "石锅烹制的土豆鸡块，热气腾腾，土豆绵软，鸡肉鲜香",
+            "category": "主食",
+            "review_count": 78,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "水煮肉片",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/poached_spicy_pork_slices.jpg",
+            "rating": 4.5,
+            "price": 16.5,
+            "description": "川菜经典名菜，嫩滑肉片浸在红油辣汤中，配以豆芽等蔬菜，麻辣鲜香，口感丰富",
+            "category": "主食",
+            "review_count": 142,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "麻辣香锅",
+            "restaurant": "东一食堂二楼",
+            "image_path": "imgs/spicy_pot.jpg",
+            "rating": 4.6,
+            "price": 16.5,
+            "description": "多种食材自由搭配，麻辣鲜香，锅气十足，下饭神器",
+            "category": "主食",
+            "review_count": 189,
+            "isAvailable": true
+        },
+
+        {
+            "dish_name": "土豆丝鸡蛋煎饼",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/potato_egg_pancake.jpg",
+            "rating": 4.2,
+            "price": 3.5,
+            "description": "金黄酥脆的煎饼包裹着爽脆土豆丝和香嫩鸡蛋，外酥里嫩，香气扑鼻",
+            "category": "小吃",
+            "review_count": 89,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "酱香大骨饭",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/soy_sauce_pork_bone_rice.jpg",
+            "rating": 4.5,
+            "price": 15,
+            "description": "酱香浓郁的大骨配以香糯米饭，肉质软烂入味，骨髓鲜美",
+            "category": "主食",
+            "review_count": 156,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "金汤巴沙鱼",
+            "restaurant": "西一食堂二楼",
+            "image_path": "imgs/golden_soup_basa_fish.jpg",
+            "rating": 4.4,
+            "price": 15,
+            "description": "鲜嫩巴沙鱼片浸泡在金汤中，酸辣开胃，鱼肉细腻无刺",
+            "category": "主菜",
+            "review_count": 134,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "牛肉拌面",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/beef_mixed_noodles.jpg",
+            "rating": 4.3,
+            "price": 12,
+            "description": "筋道面条搭配嫩滑牛肉和特制酱料，搅拌均匀后香气四溢",
+            "category": "主食",
+            "review_count": 121,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "烤肉饭",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/grilled_meat_rice.jpg",
+            "rating": 4.2,
+            "price": 12,
+            "description": "香烤肉类配以米饭和蔬菜，烤肉外焦里嫩，香气浓郁",
+            "category": "主食",
+            "review_count": 98,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "大碗饭",
+            "restaurant": "西一食堂二楼",
+            "image_path": "imgs/big_bowl_rice.jpg",
+            "rating": 4.1,
+            "price": 15,
+            "description": "丰盛的大碗饭菜，分量十足，多种配菜搭配，经济实惠",
+            "category": "主食",
+            "review_count": 167,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "牛肉粉丝",
+            "restaurant": "东园食堂一楼",
+            "image_path": "imgs/beef_vermicelli.jpg",
+            "rating": 4.3,
+            "price": 9,
+            "description": "滑嫩牛肉与爽滑粉丝的完美结合，汤汁鲜美，暖胃舒心",
+            "category": "汤类",
+            "review_count": 112,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "香霸王卤肉饭",
+            "restaurant": "东一食堂二楼",
+            "image_path": "imgs/fragrant_braised_pork_rice.jpg",
+            "rating": 4.6,
+            "price": 12,
+            "description": "秘制卤肉肥而不腻，酱香浓郁，搭配米饭令人回味无穷",
+            "category": "主食",
+            "review_count": 189,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "红烧肉虎皮鹌鹑蛋盖饭",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/braised_pork_quail_egg_rice.jpg",
+            "rating": 4.4,
+            "price": 12,
+            "description": "经典红烧肉搭配虎皮鹌鹑蛋，肉质软糯，蛋香浓郁，下饭佳品",
+            "category": "主食",
+            "review_count": 145,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "大骨汤螺蛳粉",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/bone_soup_river_snails_rice_noodles.jpg",
+            "rating": 4.7,
+            "price": 3.5,
+            "description": "浓郁大骨汤底配以酸笋和螺蛳粉，酸辣鲜香，风味独特",
+            "category": "粉面",
+            "review_count": 203,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "炒宽面",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/fried_wide_noodles.jpg",
+            "rating": 4.0,
+            "price": 7.0,
+            "description": "宽面与蔬菜肉类大火快炒，面条筋道，锅气十足",
+            "category": "粉面",
+            "review_count": 76,
+            "isAvailable": true
+        },
+
+        {
+        "dish_name": "猪排盖饭",
+        "restaurant": "东园食堂一楼",
+        "image_path": "imgs/pork_cutlet_rice.jpg",
+        "rating": 4.3,
+        "price": 12,
+        "description": "金黄的煎猪排铺在热腾腾的米饭上，淋上特制酱汁，外酥里嫩，香气扑鼻",
+        "category": "主食",
+        "review_count": 134,
+        "isAvailable": true
+        },
+        {
+            "dish_name": "卤肉素面条",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/braised_pork_vegetable_noodles.jpg",
+            "rating": 4.1,
+            "price": 7.0,
+            "description": "香浓卤肉搭配清爽筋道面条，卤汁入味，营养均衡",
+            "category": "粉面",
+            "review_count": 98,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "红烧肉土豆泥盖饭",
+            "restaurant": "东一食堂二楼",
+            "image_path": "imgs/braised_pork_mashed_potato_rice.jpg",
+            "rating": 4.5,
+            "price": 12,
+            "description": "经典红烧肉与绵密土豆泥的完美结合，肉质软糯，口感层次丰富",
+            "category": "主食",
+            "review_count": 156,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "卤鸡腿饭",
+            "restaurant": "西一食堂一楼",
+            "image_path": "imgs/braised_chicken_drumstick_rice.jpg",
+            "rating": 4.4,
+            "price": 12,
+            "description": "卤制入味的整只鸡腿，肉质鲜嫩多汁，卤香浓郁，下饭佳品",
+            "category": "主食",
+            "review_count": 167,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "鸭腿土豆泥盖饭",
+            "restaurant": "东一食堂二楼",
+            "image_path": "imgs/duck_leg_mashed_potato_rice.jpg",
+            "rating": 4.2,
+            "price": 12,
+            "description": "香嫩鸭腿搭配绵密土豆泥，鸭肉鲜美，土豆泥细腻顺滑",
+            "category": "主食",
+            "review_count": 112,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "鸡柳炒面",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/chicken_stir_fried_noodles.jpg",
+            "rating": 4.3,
+            "price": 12,
+            "description": "嫩滑鸡柳与面条大火快炒，配以蔬菜，香气四溢，锅气十足",
+            "category": "粉面",
+            "review_count": 121,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "炸鸡腿盖饭",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/fried_chicken_drumstick_rice.jpg",
+            "rating": 4.4,
+            "price": 12,
+            "description": "外皮酥脆、内里多汁的炸鸡腿，配以香糯米饭，满足感十足",
+            "category": "主食",
+            "review_count": 145,
+            "isAvailable": true
+        },
+        {
+            "dish_name": "鸡腿菇小炒牛肉",
+            "restaurant": "东一食堂一楼",
+            "image_path": "imgs/chicken_leg_mushroom_stir_fry_beef.jpg",
+            "rating": 4.6,
+            "price": 12,
+            "description": "鲜嫩牛肉与爽脆鸡腿菇的完美搭配，火候恰到好处，鲜香可口",
+            "category": "主菜",
+            "review_count": 89,
+            "isAvailable": true
+        },
         {
             "dish_name": "香菇牛肉粉",
             "restaurant": "喻园餐厅",
@@ -424,6 +736,7 @@
             "review_count": 298,
             "isAvailable": true
         }
+
     ],
     "settings": {
         "skipExisting": true,

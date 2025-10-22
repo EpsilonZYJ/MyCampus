@@ -177,7 +177,7 @@
             "image_path": "imgs/xiangqinbanshunfeng.jpg",
             "rating": 4.7,
             "price": 8.0,
-            "description": "",
+            "description": "清爽凉菜，香芹脆嫩搭配顺风耳（猪耳朵），口感丰富，开胃解腻",
             "category": "凉菜",
             "review_count": 189,
             "isAvailable": true
@@ -188,7 +188,7 @@
             "image_path": "imgs/xinjiangjiachangniuroubanmian.jpg",
             "rating": 4.6,
             "price": 10.0,
-            "description": "",
+            "description": "手工拉面筋道爽滑，牛肉鲜嫩多汁，新疆风味浓郁，酱料香辣开胃",
             "category": "主食",
             "review_count": 234,
             "isAvailable": true
@@ -199,7 +199,7 @@
             "image_path": "imgs/haozhihuntun.jpg",
             "rating": 3.9,
             "price": 5.0,
-            "description": "",
+            "description": "皮薄馅大，蚝汁鲜美浓郁，馄饨滑嫩爽口，汤汁浓香",
             "category": "主食",
             "review_count": 98,
             "isAvailable": true
@@ -210,7 +210,7 @@
             "image_path": "imgs/yipinguotie.jpg",
             "rating": 4.4,
             "price": 8.0,
-            "description": "",
+            "description": "底部金黄酥脆，上部松软多汁，猪肉馅料鲜香，传统小吃经典",
             "category": "主食",
             "review_count": 276,
             "isAvailable": true
@@ -221,7 +221,7 @@
             "image_path": "imgs/xiangganhuiguoroutaofan.jpg",
             "rating": 4.5,
             "price": 12.0,
-            "description": "",
+            "description": "回锅肉肥瘦相间，香干吸收肉香，酱汁浓郁下饭，川菜风味浓厚",
             "category": "主食",
             "review_count": 156,
             "isAvailable": true
@@ -232,7 +232,7 @@
             "image_path": "imgs/chaonanyuanweitusishaobing.jpg",
             "rating": 4.8,
             "price": 4.0,
-            "description": "",
+            "description": "外皮酥脆，内里松软，奶香浓郁，烤制而成，早餐必备",
             "category": "主食",
             "review_count": 167,
             "isAvailable": true
@@ -243,7 +243,7 @@
             "image_path": "imgs/xiangcainiuroujiao.jpg",
             "rating": 4.2,
             "price": 8.0,
-            "description": "",
+            "description": "牛肉馅料鲜嫩，香菜提香解腻，皮薄馅大，汁水丰富",
             "category": "主食",
             "review_count": 201,
             "isAvailable": true
@@ -254,7 +254,7 @@
             "image_path": "imgs/shuiguolvdougao.jpg",
             "rating": 4.9,
             "price": 2.0,
-            "description": "",
+            "description": "绿豆沙细腻香甜，融入时令水果，清凉解暑，传统糕点新风味",
             "category": "小食",
             "review_count": 312,
             "isAvailable": true
@@ -265,7 +265,7 @@
             "image_path": "imgs/paiguguozai.jpg",
             "rating": 4.3,
             "price": 35.0,
-            "description": "",
+            "description": "砂锅慢炖，排骨软烂入味，汤汁浓郁醇香，营养滋补",
             "category": "家常菜",
             "review_count": 178,
             "isAvailable": true
@@ -276,7 +276,7 @@
             "image_path": "imgs/guangshishuanglashuangping.jpg",
             "rating": 4.6,
             "price": 15.0,
-            "description": "",
+            "description": "烧鸭烧肉双重享受，皮脆肉嫩，蜜汁香甜，粤式经典烧腊",
             "category": "主食",
             "review_count": 145,
             "isAvailable": true
@@ -287,7 +287,7 @@
             "image_path": "imgs/xinjiangdapaijimian.jpg",
             "rating": 4.1,
             "price": 6.0,
-            "description": "",
+            "description": "大盘鸡料足味浓，鸡肉软烂土豆绵软，拌面吸收汤汁，香辣过瘾",
             "category": "主食",
             "review_count": 134,
             "isAvailable": true
@@ -298,7 +298,7 @@
             "image_path": "imgs/minglushaoyafan.jpg",
             "rating": 4.4,
             "price": 12.0,
-            "description": "",
+            "description": "明炉烤制，鸭皮金黄酥脆，鸭肉鲜嫩多汁，配米饭满足",
             "category": "主食",
             "review_count": 267,
             "isAvailable": true
@@ -309,7 +309,7 @@
             "image_path": "imgs/suantangcaiyu.jpg",
             "rating": 4.7,
             "price": 28.0,
-            "description": "",
+            "description": "贵州特色，汤底酸辣开胃，鱼肉鲜嫩细滑，酸爽过瘾",
             "category": "川菜",
             "review_count": 289,
             "isAvailable": true
@@ -320,7 +320,7 @@
             "image_path": "imgs/niuroubanmian.jpg",
             "rating": 4.5,
             "price": 12.0,
-            "description": "",
+            "description": "牛肉块大实在，面条劲道爽滑，拌料香浓入味，酱香十足",
             "category": "主食",
             "review_count": 198,
             "isAvailable": true
@@ -331,7 +331,7 @@
             "image_path": "imgs/niuroumian.jpg",
             "rating": 4.0,
             "price": 7.5,
-            "description": "",
+            "description": "清汤牛肉面，汤头清爽鲜美，牛肉软烂，面条筋道，经典面食",
             "category": "主食",
             "review_count": 87,
             "isAvailable": true
@@ -342,7 +342,7 @@
             "image_path": "imgs/kaoyu.jpg",
             "rating": 4.2,
             "price": 48.0,
-            "description": "",
+            "description": "炭火烤制，鱼肉外焦里嫩，麻辣鲜香，配菜丰富，聚餐佳选",
             "category": "川菜",
             "review_count": 156,
             "isAvailable": true
@@ -353,7 +353,7 @@
             "image_path": "imgs/zhacairousidousi.jpg",
             "rating": 4.8,
             "price": 7.5,
-            "description": "",
+            "description": "湖北特色汤面，豆丝爽滑，榨菜提鲜，肉丝嫩滑，汤汁醇香",
             "category": "汤",
             "review_count": 223,
             "isAvailable": true
@@ -364,7 +364,7 @@
             "image_path": "imgs/tangcuyukuaitaofan.jpg",
             "rating": 4.6,
             "price": 12.0,
-            "description": "",
+            "description": "鱼块外酥里嫩，糖醋汁酸甜适中，色泽红亮，开胃下饭",
             "category": "主食",
             "review_count": 267,
             "isAvailable": true
@@ -375,7 +375,7 @@
             "image_path": "imgs/lujituifan.jpg",
             "rating": 4.3,
             "price": 12.0,
-            "description": "",
+            "description": "卤水入味，鸡腿肉质鲜嫩，卤汁浓郁，拌饭香浓，经济实惠",
             "category": "主食",
             "review_count": 134,
             "isAvailable": true
@@ -386,7 +386,7 @@
             "image_path": "imgs/xiangguhuajiguobafan.jpg",
             "rating": 4.7,
             "price": 12.0,
-            "description": "",
+            "description": "锅巴香脆，鸡肉滑嫩，香菇提鲜，浇上热汤滋滋作响，风味独特",
             "category": "主食",
             "review_count": 189,
             "isAvailable": true
@@ -397,7 +397,7 @@
             "image_path": "imgs/yangrouxiangguo.jpg",
             "rating": 4.4,
             "price": 38.0,
-            "description": "",
+            "description": "新疆风味，羊肉鲜嫩无膻味，配菜丰富，麻辣香浓，暖胃驱寒",
             "category": "川菜",
             "review_count": 212,
             "isAvailable": true
@@ -408,7 +408,7 @@
             "image_path": "imgs/yunnansuantangmixian.jpg",
             "rating": 4.6,
             "price": 12.0,
-            "description": "",
+            "description": "过桥米线传统做法，汤底酸辣开胃，米线爽滑细腻，配料新鲜丰富",
             "category": "主食",
             "review_count": 178,
             "isAvailable": true
@@ -419,7 +419,7 @@
             "image_path": "imgs/fanqieyumian.jpg",
             "rating": 4.9,
             "price": 8.0,
-            "description": "",
+            "description": "番茄汤底酸甜鲜美，鱼片鲜嫩滑口，面条劲道，营养健康",
             "category": "主食",
             "review_count": 298,
             "isAvailable": true

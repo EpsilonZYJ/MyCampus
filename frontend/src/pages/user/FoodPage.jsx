@@ -131,15 +131,22 @@ export default function FoodPage() {
       </div>
 
       {/* 页面内容 - 留出筛选栏空间 */}
-      <div style={{ marginTop: `${topOffset}px`, padding: "20px", color: "white" }}>
-        <Row key={currentPage} gutter={[16, 16]}>
-          {currentDishes.map((dish) => (
-            <Col span={6} key={dish.id}>
-              <DishCard dish={dish} />
-            </Col>
-          ))}
-        </Row>
-      </div>
+      <div 
+  style={{
+    marginTop: `${topOffset}px`,
+    padding: "20px",
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: '20px 60px',  // 这个 gap 会同时控制水平和垂直间距
+    width: '100%'
+  }}
+>
+  {currentDishes.map((dish) => (
+    <div key={dish.id}>
+      <DishCard dish={dish} />
+    </div>
+  ))}
+</div>
 
       {/* 翻页 - 居中固定在底部 */}
       <div

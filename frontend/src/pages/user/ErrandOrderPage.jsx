@@ -81,7 +81,7 @@ export default function ErrandOrderPage() {
       console.log('📬 响应结果:', result);
       
       // 后端返回格式: { code: 200, message: "success", data: {...} }
-      if (result.code === 200 || response.ok) {
+      if (result.code === 200) {
         alert("订单创建成功！");
         setShowCreateForm(false);
         fetchOrders();

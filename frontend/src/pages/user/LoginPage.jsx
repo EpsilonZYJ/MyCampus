@@ -37,6 +37,12 @@ export default function LoginPage() {
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
 
+                // 设置当前角色 - 使用用户的第一个角色作为默认角色
+                const userRoles = res.data.user?.roles || [];
+                const defaultRole = userRoles[0] || 'ROLE_STUDENT';
+                localStorage.setItem("currentRole", defaultRole);
+                console.log("[Login] Current role set to:", defaultRole);
+
                 console.log("[Login] ✅ Login successful!");
                 console.log("[Login] User info saved to localStorage");
                 console.log("[Login] User ID:", res.data.user?.id);
@@ -48,8 +54,21 @@ export default function LoginPage() {
                 console.log("[Login] User balance:", res.data.user?.balance);
 
                 message.success("登录成功！");
-                navigate("/", { replace: true }); // 登录成功后跳回首页
-                console.log("[Login] Navigating to home page");
+
+                // 使用 window.location.href 强制刷新页面,确保状态更新
+                // 根据角色跳转到对应页面
+                setTimeout(() => {
+                    if (defaultRole === 'ROLE_ADMIN') {
+                        window.location.href = '/admin/runners';
+                        console.log("[Login] Navigating to admin page");
+                    } else if (defaultRole === 'ROLE_RUNNER') {
+                        window.location.href = '/runner-orders';
+                        console.log("[Login] Navigating to runner page");
+                    } else {
+                        window.location.href = '/';
+                        console.log("[Login] Navigating to home page");
+                    }
+                }, 500); // 延迟 500ms 让用户看到成功消息
             } else {
                 console.log("[Login] ❌ Login failed: Invalid response or credentials");
                 console.log("[Login] Response structure:", {

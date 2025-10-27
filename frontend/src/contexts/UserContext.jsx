@@ -49,6 +49,12 @@ export function UserProvider({ children }) {
                     setCurrentRole(savedRole);
                 }
             }
+
+            // 如果 currentRole 变化，更新状态
+            if (e.key === 'currentRole' && e.newValue !== null) {
+                console.log("[Storage Event] Role changed to:", e.newValue);
+                setCurrentRole(e.newValue);
+            }
         };
 
         // 添加事件监听器
@@ -62,6 +68,30 @@ export function UserProvider({ children }) {
             console.log("[UserContext] Storage event listener removed");
         };
     }, []);
+
+    // 监听登录状态变化 - 在同一标签页中更新
+    useEffect(() => {
+        const checkLoginStatus = () => {
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('currentRole');
+
+            if (token && !isLoggedIn) {
+                console.log("[UserContext] User logged in - updating state");
+                setIsLoggedIn(true);
+                if (role) {
+                    setCurrentRole(role);
+                }
+            } else if (!token && isLoggedIn) {
+                console.log("[UserContext] User logged out - updating state");
+                setIsLoggedIn(false);
+            }
+        };
+
+        // 每秒检查一次登录状态
+        const interval = setInterval(checkLoginStatus, 1000);
+
+        return () => clearInterval(interval);
+    }, [isLoggedIn]);
 
     // 切换角色
     const switchRole = (role) => {

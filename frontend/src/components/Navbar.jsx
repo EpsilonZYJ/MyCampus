@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { ROLES } from "../constants/roles";
@@ -9,6 +9,24 @@ const Navbar = () => {
     const location = useLocation();
     const { currentUser, currentRole, switchRole, hasRole, logout } = useUser();
     const [showRoleMenu, setShowRoleMenu] = useState(false);
+    const [userRoles, setUserRoles] = useState([]);
+
+    // 从后端获取用户真实的角色列表
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                const user = JSON.parse(storedUser);
+                // 后端返回的roles字段是数组,如 ["ROLE_STUDENT", "ROLE_RUNNER"]
+                const roles = user.roles || [ROLES.STUDENT];
+                setUserRoles(roles);
+                console.log("[Navbar] User roles from backend:", roles);
+            } catch (e) {
+                console.error("[Navbar] Failed to parse user data:", e);
+                setUserRoles([ROLES.STUDENT]);
+            }
+        }
+    }, [currentUser]);
 
     // 根据当前激活的角色动态生成菜单
     const getMenuItems = () => {
@@ -41,6 +59,12 @@ const Navbar = () => {
     };
 
     const handleRoleSwitch = (role) => {
+        // 检查用户是否真的拥有这个角色
+        if (!userRoles.includes(role)) {
+            console.warn("[Navbar] User does not have role:", role);
+            return;
+        }
+
         switchRole(role);
         setShowRoleMenu(false);
 
@@ -90,27 +114,38 @@ const Navbar = () => {
                 {showRoleMenu && (
                     <div className="role-menu">
                         <div className="role-menu-header">切换角色</div>
-                        <button
-                            className={`role-item ${currentRole === ROLES.STUDENT ? 'active' : ''}`}
-                            onClick={() => handleRoleSwitch(ROLES.STUDENT)}
-                        >
-                            <i className="fa fa-user"></i>
-                            <span>普通学生</span>
-                        </button>
-                        <button
-                            className={`role-item ${currentRole === ROLES.RUNNER ? 'active' : ''}`}
-                            onClick={() => handleRoleSwitch(ROLES.RUNNER)}
-                        >
-                            <i className="fa fa-bicycle"></i>
-                            <span>跑腿员</span>
-                        </button>
-                        <button
-                            className={`role-item ${currentRole === ROLES.ADMIN ? 'active' : ''}`}
-                            onClick={() => handleRoleSwitch(ROLES.ADMIN)}
-                        >
-                            <i className="fa fa-shield"></i>
-                            <span>管理员</span>
-                        </button>
+
+                        {/* 只显示用户实际拥有的角色 */}
+                        {userRoles.includes(ROLES.STUDENT) && (
+                            <button
+                                className={`role-item ${currentRole === ROLES.STUDENT ? 'active' : ''}`}
+                                onClick={() => handleRoleSwitch(ROLES.STUDENT)}
+                            >
+                                <i className="fa fa-user"></i>
+                                <span>普通学生</span>
+                            </button>
+                        )}
+
+                        {userRoles.includes(ROLES.RUNNER) && (
+                            <button
+                                className={`role-item ${currentRole === ROLES.RUNNER ? 'active' : ''}`}
+                                onClick={() => handleRoleSwitch(ROLES.RUNNER)}
+                            >
+                                <i className="fa fa-bicycle"></i>
+                                <span>跑腿员</span>
+                            </button>
+                        )}
+
+                        {userRoles.includes(ROLES.ADMIN) && (
+                            <button
+                                className={`role-item ${currentRole === ROLES.ADMIN ? 'active' : ''}`}
+                                onClick={() => handleRoleSwitch(ROLES.ADMIN)}
+                            >
+                                <i className="fa fa-shield"></i>
+                                <span>管理员</span>
+                            </button>
+                        )}
+
                         <div className="role-menu-divider"></div>
                         <button
                             className="role-item logout-item"

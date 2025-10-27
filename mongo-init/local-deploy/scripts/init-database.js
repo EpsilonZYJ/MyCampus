@@ -122,26 +122,29 @@ class DatabaseInitializer {
             const userIndexes = await User.collection.getIndexes();
             console.log('  现有用户索引:', Object.keys(userIndexes).join(', '));
             
-            // 删除所有旧的驼峰命名索引(如果存在)
-            const oldIndexNames = [
-                'userName', 'userName_1',      // 旧的用户名索引
-                'studentId', 'studentId_1',    // 旧的学号索引
-                'email_1'                       // 保留 email_1,因为模型中确实使用 email
-            ];
+            // 删除所有旧的驼峰命名索引和不需要的索引
+            const indexesToDrop = [];
+            for (const indexName of Object.keys(userIndexes)) {
+                // 跳过 _id 索引(系统默认,不能删除)
+                if (indexName === '_id_') continue;
+                
+                // 保留正确的下划线命名索引
+                if (indexName === 'user_name' || indexName === 'student_id' || indexName === 'email_1') {
+                    continue;
+                }
+                
+                // 其他索引都删除(包括 userName, userName_1, studentId, studentId_1 等)
+                indexesToDrop.push(indexName);
+            }
             
             let cleanedCount = 0;
-            for (const indexName of oldIndexNames) {
-                // email_1 是正确的索引,跳过
-                if (indexName === 'email_1') continue;
-                
-                if (userIndexes[indexName]) {
-                    try {
-                        await User.collection.dropIndex(indexName);
-                        console.log(`  ✓ 已删除旧索引: ${indexName}`);
-                        cleanedCount++;
-                    } catch (dropError) {
-                        console.warn(`  ⚠️  删除索引 ${indexName} 失败:`, dropError.message);
-                    }
+            for (const indexName of indexesToDrop) {
+                try {
+                    await User.collection.dropIndex(indexName);
+                    console.log(`  ✓ 已删除旧索引: ${indexName}`);
+                    cleanedCount++;
+                } catch (dropError) {
+                    console.warn(`  ⚠️  删除索引 ${indexName} 失败:`, dropError.message);
                 }
             }
             

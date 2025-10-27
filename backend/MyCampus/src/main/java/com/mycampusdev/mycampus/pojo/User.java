@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,7 +35,8 @@ public class User {
      */
     private String id;
 
-    @Indexed(unique = true)
+    @Field("user_name")
+    @Indexed(unique = true, name = "user_name")
     @NotBlank(message = "Username cannot be empty")
     /**
      * 用户昵称，必须唯一。
@@ -59,7 +61,8 @@ public class User {
      */
     private String phoneNumber;
 
-    @Indexed(unique = true)
+    @Field("student_id")
+    @Indexed(unique = true, name = "student_id")
     @NotBlank(message = "StudentID cannot be empty")
     /**
      * 用户学号，必须唯一，是校园内身份的重要标识。

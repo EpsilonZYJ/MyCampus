@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.management.RuntimeErrorException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -21,6 +23,7 @@ import com.mycampusdev.mycampus.repository.UserRepository;
 @Service
 public class UserService implements IUserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -52,6 +55,7 @@ public class UserService implements IUserService {
 
     @Override
     public Map<String, Object> login(String username, String password) {
+        log.info("[UserService]Attempting login for user: username:{}, password:{}", username, password);
         User user = userRepository.findByUserName(username)
                 .orElseThrow(() -> new RuntimeException("User " + username+ " is not existed"));
 

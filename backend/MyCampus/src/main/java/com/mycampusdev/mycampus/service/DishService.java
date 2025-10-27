@@ -322,12 +322,18 @@ public class DishService implements IDishService {
             String imageData = dish.getImageData();
             
             // 检查并移除可能存在的Data URI前缀 (如 "data:image/png;base64,")
-            if (imageData.startsWith("data:image/")) {
-                int commaIndex = imageData.indexOf(',');
-                if (commaIndex != -1) {
-                    imageData = imageData.substring(commaIndex + 1);
+            if (imageData != null && imageData.contains(":")) {
+                // 处理 Data URL 格式: data:image/jpeg;base64,xxxxx
+                if (imageData.startsWith("data:")) {
+                    int commaIndex = imageData.indexOf(',');
+                    if (commaIndex != -1) {
+                        imageData = imageData.substring(commaIndex + 1);
+                    }
                 }
             }
+            
+            // 移除所有空白字符(换行、空格等),确保是纯净的Base64字符串
+            imageData = imageData.replaceAll("\\s+", "");
             
             // 解码Base64字符串
             byte[] imageBytes = java.util.Base64.getDecoder().decode(imageData);

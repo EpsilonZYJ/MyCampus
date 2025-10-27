@@ -113,44 +113,105 @@ class DatabaseInitializer {
         }
     }
 
+    // 清理旧索引
+    async cleanupOldIndexes() {
+        try {
+            console.log('\n🧹 清理旧索引...');
+            
+            // 获取 User 集合的所有索引
+            const userIndexes = await User.collection.getIndexes();
+            console.log('  现有用户索引:', Object.keys(userIndexes).join(', '));
+            
+            // 删除所有旧的驼峰命名索引(如果存在)
+            const oldIndexNames = [
+                'userName', 'userName_1',      // 旧的用户名索引
+                'studentId', 'studentId_1',    // 旧的学号索引
+                'email_1'                       // 保留 email_1,因为模型中确实使用 email
+            ];
+            
+            let cleanedCount = 0;
+            for (const indexName of oldIndexNames) {
+                // email_1 是正确的索引,跳过
+                if (indexName === 'email_1') continue;
+                
+                if (userIndexes[indexName]) {
+                    try {
+                        await User.collection.dropIndex(indexName);
+                        console.log(`  ✓ 已删除旧索引: ${indexName}`);
+                        cleanedCount++;
+                    } catch (dropError) {
+                        console.warn(`  ⚠️  删除索引 ${indexName} 失败:`, dropError.message);
+                    }
+                }
+            }
+            
+            if (cleanedCount > 0) {
+                console.log(`✅ 旧索引清理完成 (删除 ${cleanedCount} 个)`);
+            } else {
+                console.log('✅ 未发现需要清理的旧索引');
+            }
+        } catch (error) {
+            // 如果集合不存在或其他错误
+            if (error.message.includes('ns not found') || error.message.includes('does not exist')) {
+                console.log('  ℹ️  用户集合尚未创建,跳过索引清理');
+            } else {
+                console.warn('⚠️  清理索引时出现警告:', error.message);
+            }
+        }
+    }
+
         // 创建用户数据
     async createUsers() {
         console.log('\n👥 开始创建用户数据...');
         
         for (const userData of this.data.users) {
             try {
+                // 字段名映射: 将驼峰命名转换为下划线命名
+                const mappedUserData = {
+                    user_name: userData.userName || userData.user_name,
+                    password: userData.password,
+                    email: userData.email,
+                    phoneNumber: userData.phoneNumber,
+                    student_id: userData.studentId || userData.student_id,
+                    balance: userData.balance,
+                    roles: userData.roles,
+                    runnerProfile: userData.runnerProfile,
+                    addresses: userData.addresses
+                };
+
                 // 检查用户是否已存在
                 if (this.data.settings.skipExisting) {
                     const existing = await User.findOne({ 
                         $or: [
-                            { user_name: userData.user_name },
-                            { email: userData.email },
-                            { student_id: userData.student_id }
+                            { user_name: mappedUserData.user_name },
+                            { email: mappedUserData.email },
+                            { student_id: mappedUserData.student_id }
                         ]
                     });
                     if (existing) {
-                        console.log(`⏭️  跳过已存在的用户: ${userData.user_name}`);
+                        console.log(`⏭️  跳过已存在的用户: ${mappedUserData.user_name}`);
                         continue;
                     }
                 }
 
                 // 处理 runnerProfile 中的 Decimal128 字段
-                if (userData.runnerProfile && userData.runnerProfile.totalEarnings) {
-                    userData.runnerProfile.totalEarnings = mongoose.Types.Decimal128.fromString(
-                        userData.runnerProfile.totalEarnings.toString()
+                if (mappedUserData.runnerProfile && mappedUserData.runnerProfile.totalEarnings) {
+                    mappedUserData.runnerProfile.totalEarnings = mongoose.Types.Decimal128.fromString(
+                        mappedUserData.runnerProfile.totalEarnings.toString()
                     );
                 }
 
-                const user = new User(userData);
+                const user = new User(mappedUserData);
                 await user.save();
                 
                 this.stats.usersCreated++;
-                const roleStr = userData.roles ? userData.roles.join(', ') : 'ROLE_STUDENT';
-                console.log(`✅ 用户创建成功: ${userData.user_name} (学号: ${userData.student_id}, 角色: ${roleStr})`);
+                const roleStr = mappedUserData.roles ? mappedUserData.roles.join(', ') : 'ROLE_STUDENT';
+                console.log(`✅ 用户创建成功: ${mappedUserData.user_name} (学号: ${mappedUserData.student_id}, 角色: ${roleStr})`);
                 
             } catch (error) {
-                this.stats.errors.push(`用户创建失败 ${userData.user_name}: ${error.message}`);
-                console.error(`❌ 用户创建失败 ${userData.user_name}: ${error.message}`);
+                const userName = userData.userName || userData.user_name || 'undefined';
+                this.stats.errors.push(`用户创建失败 ${userName}: ${error.message}`);
+                console.error(`❌ 用户创建失败 ${userName}: ${error.message}`);
             }
         }
     }
@@ -303,6 +364,9 @@ class DatabaseInitializer {
                 console.log('\n⚠️  清空模式：将删除所有现有数据');
                 await this.clearExistingData();
             }
+            
+            // 清理旧索引(每次都执行,确保索引正确)
+            await this.cleanupOldIndexes();
             
             await this.createUsers();
             await this.createDishes();

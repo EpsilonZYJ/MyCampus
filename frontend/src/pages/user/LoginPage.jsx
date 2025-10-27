@@ -7,12 +7,15 @@ const { Text, Link } = Typography;
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
     const navigate = useNavigate();
 
     const handleLogin = async (values) => {
         console.log("[Login] Login process started");
         console.log(`[Login] Username: ${values.userName}, Time: ${new Date().toLocaleString('zh-CN')}`);
 
+        // 清除之前的错误信息
+        setErrorMsg("");
         setLoading(true);
         try {
             const requestData = {
@@ -26,23 +29,23 @@ export default function LoginPage() {
             console.log("[Login] Backend response received");
             console.log("[Login] Response data:", res);
 
-            if (res && res.token) {
-                console.log("[Login] Response contains token:", res.token);
-                console.log("[Login] Response contains user:", res.user);
+            if (res.success && res.data && res.data.token) {
+                console.log("[Login] Response contains token:", res.data.token);
+                console.log("[Login] Response contains user:", res.data.user);
 
                 // 存储登录信息
-                localStorage.setItem("token", res.token);
-                localStorage.setItem("user", JSON.stringify(res.user));
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
 
                 console.log("[Login] ✅ Login successful!");
                 console.log("[Login] User info saved to localStorage");
-                console.log("[Login] User ID:", res.user?.id);
-                console.log("[Login] User name:", res.user?.userName);
-                console.log("[Login] User email:", res.user?.email);
-                console.log("[Login] User phone:", res.user?.phoneNumber);
-                console.log("[Login] User studentId:", res.user?.studentId);
-                console.log("[Login] User roles:", res.user?.roles);
-                console.log("[Login] User balance:", res.user?.balance);
+                console.log("[Login] User ID:", res.data.user?.id);
+                console.log("[Login] User name:", res.data.user?.userName);
+                console.log("[Login] User email:", res.data.user?.email);
+                console.log("[Login] User phone:", res.data.user?.phoneNumber);
+                console.log("[Login] User studentId:", res.data.user?.studentId);
+                console.log("[Login] User roles:", res.data.user?.roles);
+                console.log("[Login] User balance:", res.data.user?.balance);
 
                 message.success("登录成功！");
                 navigate("/", { replace: true }); // 登录成功后跳回首页
@@ -50,16 +53,27 @@ export default function LoginPage() {
             } else {
                 console.log("[Login] ❌ Login failed: Invalid response or credentials");
                 console.log("[Login] Response structure:", {
-                    hasToken: !!res?.token,
-                    hasUser: !!res?.user,
+                    success: res.success,
+                    hasData: !!res.data,
+                    hasToken: !!res.data?.token,
+                    hasUser: !!res.data?.user,
+                    errorMessage: res.message,
                     response: res
                 });
-                message.error("用户名或密码错误");
+
+                // 显示后端返回的错误信息
+                const errorMessage = res.message || "用户名或密码错误";
+                setErrorMsg(errorMessage);
+                message.error(errorMessage);
+                console.log("[Login] Error message displayed to user:", errorMessage);
             }
         } catch (err) {
             console.error("[Login] ❌ Login exception:", err);
             console.error(`[Login] Error details: ${err.message}`);
-            message.error("登录失败，请稍后再试");
+            const errorMessage = "登录失败，请稍后再试";
+            setErrorMsg(errorMessage);
+            message.error(errorMessage);
+            console.log("[Login] Error message displayed to user:", errorMessage);
         } finally {
             setLoading(false);
             console.log("[Login] Login process ended\n");
@@ -95,6 +109,23 @@ export default function LoginPage() {
                     登录
                 </Button>
             </Form>
+
+            {/* 错误信息提示 - 一行显示 */}
+            {errorMsg && (
+                <div style={{
+                    color: '#ff4d4f',
+                    backgroundColor: '#fff2f0',
+                    border: '1px solid #ffccc7',
+                    padding: '8px 12px',
+                    borderRadius: '4px',
+                    marginBottom: '16px',
+                    fontSize: '14px',
+                    textAlign: 'center',
+                    marginTop: '16px'
+                }}>
+                    ❌ {errorMsg}
+                </div>
+            )}
 
             <div style={{ textAlign: "center", marginTop: 16 }}>
                 <Text>没有账号？ </Text>

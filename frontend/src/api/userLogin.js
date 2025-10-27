@@ -17,10 +17,15 @@ export const registerUser = async (userData) => {
 export const loginUser = async (userName, password) => {
   try {
     const res = await axios.post("/api/users/login", { userName, password });
-    return res.data?.data || null; // 后端返回 token 和 user 信息
+    return { success: true, data: res.data?.data }; // 后端返回 token 和 user 信息
   } catch (err) {
     console.error("用户登录失败:", err);
-    return null;
+    // 返回错误信息
+    return { 
+      success: false, 
+      message: err.response?.data?.message || err.message || "登录失败",
+      error: err.response?.data || err
+    };
   }
 };
 

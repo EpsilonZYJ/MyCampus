@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,6 +37,7 @@ import jakarta.validation.constraints.NotNull;
 @Validated
 public class UserController {
 
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private IUserService userService;
 
@@ -63,7 +66,9 @@ public class UserController {
      */
     @PostMapping("/register")
     public ResponseMessage<User> register(@Valid @RequestBody UserRegisterRequest userRegisterRequest) {
+        log.info("Registering user {}", userRegisterRequest);
         User registeredUser = userService.register(userRegisterRequest);
+        log.info("User {} registered successfully", userRegisterRequest);
         return ResponseMessage.success(registeredUser);
     }
 
@@ -74,7 +79,9 @@ public class UserController {
      */
     @PostMapping("/login")
     public ResponseMessage<Map<String, Object>> login(@RequestBody @Valid LoginRequest loginRequest) {
+        log.info("Logining user: name:{} password:{}", loginRequest.userName, loginRequest.password);
         Map<String, Object> loginResult = userService.login(loginRequest.userName, loginRequest.password);
+        log.info("User {} login successfully", loginResult.toString());
         return ResponseMessage.success(loginResult);
     }
 

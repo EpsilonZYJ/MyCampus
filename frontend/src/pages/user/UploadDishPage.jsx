@@ -24,9 +24,9 @@ const { Option } = Select;
 export default function UploadDishPage() {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState([]);
+  const [ratingValue, setRatingValue] = useState(0);
+  const [form] = Form.useForm();
   
-const [ratingValue, setRatingValue] = useState(0);
-
   const handleUpload = async (values) => {
     if (fileList.length === 0) {
       message.error("请上传菜品图片");
@@ -35,17 +35,16 @@ const [ratingValue, setRatingValue] = useState(0);
 
     const file = fileList[0];
     const formData = new FormData();
-    formData.append("dish_name", values.name);
+    formData.append("dishName", values.name);
     formData.append("restaurant", values.restaurant);
     formData.append("category", values.category);
     formData.append("price", values.price);
-    formData.append("rating", values.rating || 0);
+    // 使用ratingValue作为主要评分来源，确保不为0时正确传递
+    formData.append("rating", ratingValue || 0);
+    console.log("提交的评分值:", ratingValue); // 添加调试日志
     formData.append("description", values.description || "");
-    formData.append("review_count", 0);
     formData.append("isAvailable", values.isAvailable ?? true);
-    formData.append("created_at", new Date().toISOString());
-    formData.append("updated_at", new Date().toISOString());
-    formData.append("image", file.originFileObj || file);
+    formData.append("imageData", file.originFileObj || file);
 
     try {
       const res = await createDish(formData);
@@ -96,7 +95,7 @@ const [ratingValue, setRatingValue] = useState(0);
             上传菜品
           </h1>
 
-          <Form layout="vertical" onFinish={handleUpload}>
+          <Form layout="vertical" onFinish={handleUpload} form={form}>
             {/* 第一行：菜品名称 + 餐厅 */}
             <Row gutter={24}>
               <Col span={12}>
@@ -160,11 +159,14 @@ const [ratingValue, setRatingValue] = useState(0);
 {/* 第三行：评分 + 是否可供应 */}
 <Row gutter={24} align="middle">
   <Col span={12}>
-  <Form.Item label="评分">
+  <Form.Item label="评分" name="rating" initialValue={0}>
   <Rate
     allowHalf
-    value={ratingValue}   // 绑定 state
-    onChange={(value) => setRatingValue(value)} // 更新 state
+    value={ratingValue}
+    onChange={(value) => {
+      setRatingValue(value);
+      form.setFieldValue('rating', value);
+    }}
   />
   <span style={{ marginLeft: 8 }}>
     {ratingValue ? `${ratingValue}星` : "未评分"}

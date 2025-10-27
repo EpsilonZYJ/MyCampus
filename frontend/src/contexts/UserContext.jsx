@@ -12,12 +12,56 @@ export function UserProvider({ children }) {
     });
 
     const [currentUser, setCurrentUser] = useState(MOCK_USERS[currentRole]);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return !!localStorage.getItem('token');
+    });
 
     // 当角色改变时，更新用户信息和 localStorage
     useEffect(() => {
         setCurrentUser(MOCK_USERS[currentRole]);
         localStorage.setItem('currentRole', currentRole);
     }, [currentRole]);
+
+    // 监听 localStorage 变化，实现跨标签页登出同步
+    useEffect(() => {
+        const handleStorageChange = (e) => {
+            console.log("[Storage Event] Storage changed in another tab");
+            console.log(`[Storage Event] Key: ${e.key}, NewValue: ${e.newValue}`);
+            
+            // 如果 token 被移除，说明在其他标签页登出了
+            if (e.key === 'token' && e.newValue === null) {
+                console.log("[Storage Event] Token removed - User logged out in another tab");
+                setIsLoggedIn(false);
+                
+                // 触发页面重新加载或跳转到登录页
+                window.location.href = '/login';
+            }
+            
+            // 如果 token 被添加，说明在其他标签页登录了
+            if (e.key === 'token' && e.newValue !== null && e.oldValue === null) {
+                console.log("[Storage Event] Token added - User logged in in another tab");
+                setIsLoggedIn(true);
+                
+                // 重新加载用户信息
+                const savedUser = localStorage.getItem('user');
+                const savedRole = localStorage.getItem('currentRole');
+                if (savedUser && savedRole) {
+                    setCurrentRole(savedRole);
+                }
+            }
+        };
+
+        // 添加事件监听器
+        window.addEventListener('storage', handleStorageChange);
+        
+        console.log("[UserContext] Storage event listener added");
+
+        // 清理函数
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            console.log("[UserContext] Storage event listener removed");
+        };
+    }, []);
 
     // 切换角色
     const switchRole = (role) => {
@@ -34,14 +78,18 @@ export function UserProvider({ children }) {
         console.log("[Logout] User logout started");
         console.log(`[Logout] Current user: ${currentUser.userName}, Time: ${new Date().toLocaleString('zh-CN')}`);
 
-        // 清除 localStorage
+        // 清除 localStorage (这会触发其他标签页的 storage 事件)
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('currentRole');
 
         console.log("[Logout] LocalStorage cleared");
+        console.log("[Logout] This will trigger storage event in other tabs");
         console.log("[Logout] User logout completed\n");
 
+        // 更新登录状态
+        setIsLoggedIn(false);
+        
         // 重置为默认状态
         setCurrentRole(ROLES.STUDENT);
         setCurrentUser(MOCK_USERS[ROLES.STUDENT]);
@@ -53,6 +101,7 @@ export function UserProvider({ children }) {
         switchRole,
         hasRole,
         logout,
+        isLoggedIn,
     };
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

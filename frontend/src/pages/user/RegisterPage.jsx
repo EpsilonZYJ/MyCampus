@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, message, Typography } from "antd";
-import { registerUser } from "../../api/MockUser";
+import { registerUser } from "../../api/userLogin";
 
 const { Text, Link } = Typography;
 
@@ -16,19 +16,19 @@ export default function RegisterPage() {
 
         setLoading(true);
         try {
-            console.log("[Register] Calling register API...");
+            console.log("[Register] Calling backend register API...");
             const res = await registerUser(values);
             console.log("[Register] API response:", res);
 
-            if (res.success) {
+            if (res) {
                 console.log("[Register] ✅ Registration successful!");
-                console.log("[Register] New user info:", res.user || res.data);
+                console.log("[Register] New user info:", res);
                 message.success("注册成功，请登录！");
                 navigate("/login", { replace: true });
                 console.log("[Register] Navigating to login page");
             } else {
-                console.log(`[Register] ❌ Registration failed: ${res.message}`);
-                message.error(res.message || "注册失败");
+                console.log("[Register] ❌ Registration failed: Invalid response");
+                message.error("注册失败，请检查输入信息");
             }
         } catch (err) {
             console.error("[Register] ❌ Registration exception:", err);

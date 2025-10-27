@@ -69,6 +69,93 @@
                     "isDefault": true
                 }
             ]
+        },
+        {
+            "user_name": "admin123",
+            "password": "123321",
+            "email": "admin123@hust.edu.cn",
+            "phoneNumber": "13800138009",
+            "student_id": "U202500001",
+            "balance": 800.0,
+            "roles": [
+                "ROLE_STUDENT",
+                "ROLE_RUNNER",
+                "ROLE_ADMIN"
+            ],
+            "runnerProfile": {
+                "status": "ONLINE",
+                "rating": 4.8,
+                "totalOrdersCompleted": 156,
+                "idCardNumber": "420102199901011238",
+                "healthCertificateUrl": "/opt/app/images/certificates/health_cert_001.jpg",
+                "isVerified": true,
+                "totalEarnings": "2560.50"
+            },
+            "addresses": [
+                {
+                    "name": "李四",
+                    "building": "韵苑公寓",
+                    "room": "A501",
+                    "isDefault": true
+                }
+            ]
+        },
+        {
+            "user_name": "stu123",
+            "password": "123321",
+            "email": "stu123@hust.edu.cn",
+            "phoneNumber": "13800138003",
+            "student_id": "U202600001",
+            "balance": 800.0,
+            "roles": [
+                "ROLE_STUDENT"
+            ],
+            "runnerProfile": {
+                "status": "ONLINE",
+                "rating": 4.8,
+                "totalOrdersCompleted": 156,
+                "idCardNumber": "420102199901011239",
+                "healthCertificateUrl": "/opt/app/images/certificates/health_cert_001.jpg",
+                "isVerified": true,
+                "totalEarnings": "2560.50"
+            },
+            "addresses": [
+                {
+                    "name": "李四",
+                    "building": "韵苑公寓",
+                    "room": "A501",
+                    "isDefault": true
+                }
+            ]
+        },
+        {
+            "user_name": "runner123",
+            "password": "123321",
+            "email": "runner123@hust.edu.cn",
+            "phoneNumber": "13800138003",
+            "student_id": "U202700001",
+            "balance": 800.0,
+            "roles": [
+                "ROLE_STUDENT",
+                "ROLE_RUNNER"
+            ],
+            "runnerProfile": {
+                "status": "ONLINE",
+                "rating": 4.8,
+                "totalOrdersCompleted": 156,
+                "idCardNumber": "420102199901011240",
+                "healthCertificateUrl": "/opt/app/images/certificates/health_cert_001.jpg",
+                "isVerified": true,
+                "totalEarnings": "2560.50"
+            },
+            "addresses": [
+                {
+                    "name": "李四",
+                    "building": "韵苑公寓",
+                    "room": "A501",
+                    "isDefault": true
+                }
+            ]
         }
     ],
     "dishes": [
@@ -160,8 +247,6 @@
             "review_count": 203,
             "isAvailable": true
         },
-
-
         {
             "dish_name": "牛肉拌饭",
             "restaurant": "西一食堂一楼",
@@ -261,7 +346,6 @@
             "review_count": 189,
             "isAvailable": true
         },
-
         {
             "dish_name": "土豆丝鸡蛋煎饼",
             "restaurant": "西一食堂一楼",
@@ -383,17 +467,16 @@
             "review_count": 76,
             "isAvailable": true
         },
-
         {
-        "dish_name": "猪排盖饭",
-        "restaurant": "东园食堂一楼",
-        "image_path": "imgs/pork_cutlet_rice.jpg",
-        "rating": 4.3,
-        "price": 12,
-        "description": "金黄的煎猪排铺在热腾腾的米饭上，淋上特制酱汁，外酥里嫩，香气扑鼻",
-        "category": "主食",
-        "review_count": 134,
-        "isAvailable": true
+            "dish_name": "猪排盖饭",
+            "restaurant": "东园食堂一楼",
+            "image_path": "imgs/pork_cutlet_rice.jpg",
+            "rating": 4.3,
+            "price": 12,
+            "description": "金黄的煎猪排铺在热腾腾的米饭上，淋上特制酱汁，外酥里嫩，香气扑鼻",
+            "category": "主食",
+            "review_count": 134,
+            "isAvailable": true
         },
         {
             "dish_name": "卤肉素面条",
@@ -736,7 +819,6 @@
             "review_count": 298,
             "isAvailable": true
         }
-
     ],
     "settings": {
         "skipExisting": true,

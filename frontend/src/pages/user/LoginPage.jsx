@@ -1,7 +1,7 @@
 ﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { message, Form, Input, Button, Typography } from "antd";
-import { mockLogin } from "../../api/MockUser";
+import { loginUser } from "../../api/userLogin";
 
 const { Text, Link } = Typography;
 
@@ -15,24 +15,45 @@ export default function LoginPage() {
 
         setLoading(true);
         try {
-            console.log("[Login] Calling login API...");
-            const res = await mockLogin(values.userName, values.password);
-            console.log("[Login] API response:", res);
+            const requestData = {
+                userName: values.userName,
+                password: values.password
+            };
+            console.log("[Login] Request data to backend:", requestData);
+            console.log("[Login] Calling backend login API...");
 
-            if (res) {
+            const res = await loginUser(values.userName, values.password);
+            console.log("[Login] Backend response received");
+            console.log("[Login] Response data:", res);
+
+            if (res && res.token) {
+                console.log("[Login] Response contains token:", res.token);
+                console.log("[Login] Response contains user:", res.user);
+
                 // 存储登录信息
-                localStorage.setItem("token", res.token || "mock-token");
-                localStorage.setItem("user", JSON.stringify(res.user || res));
+                localStorage.setItem("token", res.token);
+                localStorage.setItem("user", JSON.stringify(res.user));
 
                 console.log("[Login] ✅ Login successful!");
                 console.log("[Login] User info saved to localStorage");
-                console.log(`[Login] User role: ${res.user?.role || res.role}`);
+                console.log("[Login] User ID:", res.user?.id);
+                console.log("[Login] User name:", res.user?.userName);
+                console.log("[Login] User email:", res.user?.email);
+                console.log("[Login] User phone:", res.user?.phoneNumber);
+                console.log("[Login] User studentId:", res.user?.studentId);
+                console.log("[Login] User roles:", res.user?.roles);
+                console.log("[Login] User balance:", res.user?.balance);
 
                 message.success("登录成功！");
                 navigate("/", { replace: true }); // 登录成功后跳回首页
                 console.log("[Login] Navigating to home page");
             } else {
-                console.log("[Login] ❌ Login failed: Invalid username or password");
+                console.log("[Login] ❌ Login failed: Invalid response or credentials");
+                console.log("[Login] Response structure:", {
+                    hasToken: !!res?.token,
+                    hasUser: !!res?.user,
+                    response: res
+                });
                 message.error("用户名或密码错误");
             }
         } catch (err) {

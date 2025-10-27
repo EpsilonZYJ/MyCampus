@@ -27,21 +27,21 @@ export function UserProvider({ children }) {
         const handleStorageChange = (e) => {
             console.log("[Storage Event] Storage changed in another tab");
             console.log(`[Storage Event] Key: ${e.key}, NewValue: ${e.newValue}`);
-            
+
             // 如果 token 被移除，说明在其他标签页登出了
             if (e.key === 'token' && e.newValue === null) {
                 console.log("[Storage Event] Token removed - User logged out in another tab");
                 setIsLoggedIn(false);
-                
+
                 // 触发页面重新加载或跳转到登录页
                 window.location.href = '/login';
             }
-            
+
             // 如果 token 被添加，说明在其他标签页登录了
             if (e.key === 'token' && e.newValue !== null && e.oldValue === null) {
                 console.log("[Storage Event] Token added - User logged in in another tab");
                 setIsLoggedIn(true);
-                
+
                 // 重新加载用户信息
                 const savedUser = localStorage.getItem('user');
                 const savedRole = localStorage.getItem('currentRole');
@@ -53,7 +53,7 @@ export function UserProvider({ children }) {
 
         // 添加事件监听器
         window.addEventListener('storage', handleStorageChange);
-        
+
         console.log("[UserContext] Storage event listener added");
 
         // 清理函数
@@ -89,7 +89,7 @@ export function UserProvider({ children }) {
 
         // 更新登录状态
         setIsLoggedIn(false);
-        
+
         // 重置为默认状态
         setCurrentRole(ROLES.STUDENT);
         setCurrentUser(MOCK_USERS[ROLES.STUDENT]);

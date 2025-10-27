@@ -91,7 +91,13 @@ public class DishController {
             // 设置响应头
             HttpHeaders headers = new HttpHeaders();
             if (contentType != null) {
-                headers.setContentType(MediaType.parseMediaType(contentType));
+                try {
+                    // 尝试解析contentType
+                    headers.setContentType(MediaType.parseMediaType(contentType));
+                } catch (Exception e) {
+                    // 如果解析失败，使用默认的JPEG类型
+                    headers.setContentType(MediaType.IMAGE_JPEG);
+                }
             } else {
                 headers.setContentType(MediaType.IMAGE_JPEG);
             }

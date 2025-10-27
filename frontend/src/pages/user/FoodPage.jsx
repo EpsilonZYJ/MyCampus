@@ -10,7 +10,7 @@ import {
   getDishesByCategory,
   getDishesByRestaurant,
   searchDishes,
-} from "../../api/MockDish";
+} from "../../api/dish";
 
 const { Option } = Select;
 

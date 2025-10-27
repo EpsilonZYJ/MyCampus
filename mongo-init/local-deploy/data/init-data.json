@@ -1,11 +1,11 @@
 {
     "users": [
         {
-            "user_name": "admin",
+            "userName": "admin",
             "password": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
             "email": "admin@hust.edu.cn",
             "phoneNumber": "13800138000",
-            "student_id": "U202300001",
+            "studentId": "U202300001",
             "balance": 1000000.0,
             "roles": [
                 "ROLE_STUDENT",
@@ -22,11 +22,11 @@
             ]
         },
         {
-            "user_name": "john_doe",
+            "userName": "john_doe",
             "password": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
             "email": "john@hust.edu.cn",
             "phoneNumber": "13800138001",
-            "student_id": "U202100101",
+            "studentId": "U202100101",
             "balance": 500.5,
             "roles": [
                 "ROLE_STUDENT"
@@ -42,11 +42,11 @@
             ]
         },
         {
-            "user_name": "runner_zhang",
+            "userName": "runner_zhang",
             "password": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
             "email": "runner@hust.edu.cn",
             "phoneNumber": "13800138002",
-            "student_id": "U202100201",
+            "studentId": "U202100201",
             "balance": 800.0,
             "roles": [
                 "ROLE_STUDENT",
@@ -71,11 +71,11 @@
             ]
         },
         {
-            "user_name": "admin123",
+            "userName": "admin123",
             "password": "123321",
             "email": "admin123@hust.edu.cn",
             "phoneNumber": "13800138009",
-            "student_id": "U202500001",
+            "studentId": "U202500001",
             "balance": 800.0,
             "roles": [
                 "ROLE_STUDENT",
@@ -101,11 +101,11 @@
             ]
         },
         {
-            "user_name": "stu123",
+            "userName": "stu123",
             "password": "123321",
             "email": "stu123@hust.edu.cn",
             "phoneNumber": "13800138003",
-            "student_id": "U202600001",
+            "studentId": "U202600001",
             "balance": 800.0,
             "roles": [
                 "ROLE_STUDENT"
@@ -129,11 +129,11 @@
             ]
         },
         {
-            "user_name": "runner123",
+            "userName": "runner123",
             "password": "123321",
             "email": "runner123@hust.edu.cn",
             "phoneNumber": "13800138003",
-            "student_id": "U202700001",
+            "studentId": "U202700001",
             "balance": 800.0,
             "roles": [
                 "ROLE_STUDENT",

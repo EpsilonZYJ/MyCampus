@@ -1,13 +1,13 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { Modal, Rate, Button, message } from "antd";
-import { updateDishRating } from "../api/MockDish";
+import { updateDishRating, getDishImage } from "../api/dish";
 import "./DishCard.css";
 
 export default function DishCard({ dish, onUpdate }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [submitting, setSubmitting] = useState(false);
-
+  
   const handleSubmitRating = async () => {
     if (userRating === 0) {
       message.warning("请先选择评分！");
@@ -30,7 +30,7 @@ export default function DishCard({ dish, onUpdate }) {
     <>
       {/* 菜品卡片 */}
       <div className="dish-card" onClick={() => setIsModalVisible(true)}>
-        <img src={dish.imageData} alt={dish.dishName} />
+        <img src={getDishImage(dish.id)} alt={dish.dishName} />
         <div className="dish-card-name">
           {dish.restaurant
             ? `${dish.restaurant} - ${dish.dishName}`
@@ -48,7 +48,7 @@ export default function DishCard({ dish, onUpdate }) {
       >
         <div style={{ textAlign: "center" }}>
           <img
-            src={dish.imageData}
+            src={getDishImage(dish.id)}
             alt={dish.dishName}
             style={{
               width: "100%",

@@ -54,14 +54,14 @@ public class DishService implements IDishService {
         // 处理图片 - 转换为Base64编码并存储
         if (createDishRequest.getImageData() != null && !createDishRequest.getImageData().isEmpty()) {
             try {
-                // 获取图片类型
+                // 获取图片类型并确保是标准MIME格式
                 String contentType = createDishRequest.getImageData().getContentType();
                 
                 // 将图片转换为Base64编码字符串
                 byte[] imageBytes = createDishRequest.getImageData().getBytes();
                 String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
                 
-                // 在数据库中存储Base64编码和图片类型
+                // 在数据库中存储Base64编码和标准MIME类型（仅存储纯Base64数据，不包含前缀）
                 dish.setImageData(base64Image);
                 dish.setImageType(contentType);
             } catch (IOException e) {
@@ -157,10 +157,24 @@ public class DishService implements IDishService {
             existingDish.setRestaurant(dish.getRestaurant());
         }
         if (dish.getImageData() != null) {
-            existingDish.setImageData(dish.getImageData());
+            // 检查并移除可能存在的Data URI前缀
+            String imageData = dish.getImageData();
+            if (imageData.startsWith("data:image/")) {
+                int commaIndex = imageData.indexOf(',');
+                if (commaIndex != -1) {
+                    imageData = imageData.substring(commaIndex + 1);
+                }
+            }
+            existingDish.setImageData(imageData);
         }
         if(dish.getImageType() != null) {
-            existingDish.setImageType(dish.getImageType());
+            // 确保设置的imageType是标准MIME格式
+            String imageType = dish.getImageType();
+            if (!imageType.contains("/")) {
+                // 如果只有扩展名，添加"image/"前缀
+                imageType = "image/" + imageType.toLowerCase();
+            }
+            existingDish.setImageType(imageType);
         }
         if (dish.getRating() != null) {
             existingDish.setRating(dish.getRating());
@@ -232,14 +246,14 @@ public class DishService implements IDishService {
         // 处理图片更新
         if (dishRequest.getImageData() != null && !dishRequest.getImageData().isEmpty()) {
             try {
-                // 获取图片类型
+                // 获取图片类型并确保是标准MIME格式
                 String contentType = dishRequest.getImageData().getContentType();
                 
                 // 将图片转换为Base64编码字符串
                 byte[] imageBytes = dishRequest.getImageData().getBytes();
                 String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
                 
-                // 在数据库中存储Base64编码和图片类型
+                // 在数据库中存储Base64编码和标准MIME类型（仅存储纯Base64数据，不包含前缀）
                 existingDish.setImageData(base64Image);
                 existingDish.setImageType(contentType);
             } catch (IOException e) {
@@ -304,13 +318,37 @@ public class DishService implements IDishService {
         }
         
         try {
-            // 从数据库获取Base64编码的图片数据并解码
-            byte[] imageBytes = java.util.Base64.getDecoder().decode(dish.getImageData());
+            // 获取图片数据
+            String imageData = dish.getImageData();
+            
+            // 检查并移除可能存在的Data URI前缀 (如 "data:image/png;base64,")
+            if (imageData != null && imageData.contains(":")) {
+                // 处理 Data URL 格式: data:image/jpeg;base64,xxxxx
+                if (imageData.startsWith("data:")) {
+                    int commaIndex = imageData.indexOf(',');
+                    if (commaIndex != -1) {
+                        imageData = imageData.substring(commaIndex + 1);
+                    }
+                }
+            }
+            
+            // 移除所有空白字符(换行、空格等),确保是纯净的Base64字符串
+            imageData = imageData.replaceAll("\\s+", "");
+            
+            // 解码Base64字符串
+            byte[] imageBytes = java.util.Base64.getDecoder().decode(imageData);
+            
+            // 确保contentType是标准的MIME类型格式 (包含'/')
+            String contentType = dish.getImageType();
+            if (contentType != null && !contentType.contains("/")) {
+                // 如果只有扩展名，添加"image/"前缀
+                contentType = "image/" + contentType.toLowerCase();
+            }
             
             // 创建返回结果Map
             Map<String, Object> result = new HashMap<>();
             result.put("imageData", imageBytes);
-            result.put("contentType", dish.getImageType());
+            result.put("contentType", contentType);
             result.put("contentLength", (long) imageBytes.length);
             
             return result;

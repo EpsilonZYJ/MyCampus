@@ -30,7 +30,7 @@ public class CreateDishRequest {
 
     private String description;
 
-    @Pattern(regexp = "^(主食|炒菜|小吃|饮品)", message = "所添加菜品分类无效")
+    @Pattern(regexp = "^(主食|炒菜|小吃|饮品|粤菜|鲁菜|川菜|湘菜)", message = "所添加菜品分类无效")
     private String category;
 
     private Boolean isAvailable = true;

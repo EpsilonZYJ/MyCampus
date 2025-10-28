@@ -1,0 +1,145 @@
+/* 无权限页面样式 */
+.unauthorized-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.unauthorized-content {
+    background: white;
+    border-radius: 20px;
+    padding: 60px 40px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.unauthorized-icon {
+    margin-bottom: 30px;
+}
+
+.unauthorized-icon i {
+    font-size: 80px;
+    color: #ff6b6b;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-10deg);
+    }
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+.unauthorized-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 20px;
+}
+
+.unauthorized-message {
+    font-size: 18px;
+    color: #4a5568;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.unauthorized-message strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.unauthorized-required {
+    font-size: 16px;
+    color: #718096;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #f7fafc;
+    border-radius: 10px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.unauthorized-required strong {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+.unauthorized-user-info {
+    background: #edf2f7;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.unauthorized-user-info p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.unauthorized-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.unauthorized-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.unauthorized-button:active {
+    transform: translateY(0);
+}
+
+.unauthorized-button i {
+    margin-right: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .unauthorized-content {
+        padding: 40px 20px;
+    }
+
+    .unauthorized-title {
+        font-size: 24px;
+    }
+
+    .unauthorized-message {
+        font-size: 16px;
+    }
+
+    .unauthorized-icon i {
+        font-size: 60px;
+    }
+}

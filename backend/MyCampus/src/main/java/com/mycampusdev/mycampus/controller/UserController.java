@@ -153,8 +153,20 @@ public class UserController {
      */
     @PostMapping("/{userId}/become-runner")
     public ResponseMessage<User> becomeRunner(@PathVariable String userId, @Valid @RequestBody BecomeRunnerRequest request) {
-        User updatedUser = userService.becomeRunner(userId, request.idCardNumber, request.studentIDCardurl);
-        return ResponseMessage.success(updatedUser);
+        try {
+            User updatedUser = userService.becomeRunner(userId, request.idCardNumber, request.studentIDCardurl);
+            return ResponseMessage.success(updatedUser);
+        } catch (RuntimeException e) {
+            // 检查是否是用户不存在的错误
+            if (e.getMessage() != null && e.getMessage().contains("UserID.*is not existed")) {
+                return ResponseMessage.error(404, "用户不存在，请确保使用正确的用户ID");
+            }
+            // 其他运行时异常
+            return ResponseMessage.error(500, "处理申请失败: " + e.getMessage());
+        } catch (Exception e) {
+            // 捕获所有其他异常
+            return ResponseMessage.error(500, "服务器内部错误: " + e.getMessage());
+        }
     }
 
     /**

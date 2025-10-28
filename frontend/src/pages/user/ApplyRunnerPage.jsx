@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { becomeRunner } from "../../api/userLogin";
 import "./ApplyRunnerPage.css";
-
-const API_BASE_URL = "http://localhost:8080/api";
 
 export default function ApplyRunnerPage() {
   const { currentUser, hasRole } = useUser();
@@ -28,24 +27,19 @@ export default function ApplyRunnerPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/users/${currentUser.id}/become-runner`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+      // 使用统一封装的API函数
+      const result = await becomeRunner(
+        currentUser.id, 
+        formData.idCardNumber, 
+        formData.studentIDCardurl
       );
 
-      const result = await response.json();
-
-      if (result.code === 200 || response.ok) {
+      if (result) {
+        console.log("[ApplyRunner] 申请提交成功:", result);
         alert("跑腿员申请已提交！\n请等待管理员审核。");
         navigate("/");
       } else {
-        alert("申请失败: " + result.message);
+        alert("申请失败，请稍后重试");
       }
     } catch (error) {
       console.error("申请失败:", error);

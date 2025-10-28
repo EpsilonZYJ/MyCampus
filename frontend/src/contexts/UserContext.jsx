@@ -11,13 +11,40 @@ export function UserProvider({ children }) {
         return localStorage.getItem('currentRole') || ROLES.STUDENT;
     });
 
-    const [currentUser, setCurrentUser] = useState(MOCK_USERS[currentRole]);
+    // 初始化用户信息 - 优先从localStorage读取真实用户信息，否则使用模拟数据
+    const [currentUser, setCurrentUser] = useState(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            try {
+                return JSON.parse(savedUser);
+            } catch (e) {
+                console.error('解析用户信息失败:', e);
+            }
+        }
+        return MOCK_USERS[currentRole];
+    });
+
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         return !!localStorage.getItem('token');
     });
 
     // 当角色改变时，更新用户信息和 localStorage
     useEffect(() => {
+        // 优先检查localStorage中是否有真实用户信息
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            try {
+                const user = JSON.parse(savedUser);
+                // 如果用户有请求的角色，则使用真实用户信息
+                if (user.roles && user.roles.includes(currentRole)) {
+                    setCurrentUser(user);
+                    return;
+                }
+            } catch (e) {
+                console.error('解析用户信息失败:', e);
+            }
+        }
+        // 否则使用模拟数据
         setCurrentUser(MOCK_USERS[currentRole]);
         localStorage.setItem('currentRole', currentRole);
     }, [currentRole]);
@@ -45,8 +72,15 @@ export function UserProvider({ children }) {
                 // 重新加载用户信息
                 const savedUser = localStorage.getItem('user');
                 const savedRole = localStorage.getItem('currentRole');
-                if (savedUser && savedRole) {
+                if (savedRole) {
                     setCurrentRole(savedRole);
+                }
+                if (savedUser) {
+                    try {
+                        setCurrentUser(JSON.parse(savedUser));
+                    } catch (e) {
+                        console.error('解析用户信息失败:', e);
+                    }
                 }
             }
 

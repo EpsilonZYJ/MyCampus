@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { message, Form, Input, Button, Typography } from "antd";
 import { loginUser } from "../../api/userLogin";
@@ -100,56 +100,99 @@ export default function LoginPage() {
     };
 
     return (
-        <div style={{ width: 320, margin: "100px auto" }}>
-            <h2 style={{ textAlign: "center" }}>登录</h2>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundImage: "url('/imgs/login-bg.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundColor: "transparent", // 避免底层灰色显示
+          }}
+        >
+          {/* 登录框容器 */}
+          <div
+            style={{
+            position: "relative",
+              width: 320,
+              padding: 24,
+              borderRadius: 8,
+              backgroundColor: "rgba(255, 255, 255, 0.8)", // 半透明白色
+              boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+            }}
+          >
+                    <img
+            src="/imgs/美食.svg"   // public 目录下路径以 / 开头
+            alt="美食"
+            style={{
+                position: "absolute",
+                top: -30,
+                right: -60,
+                width: 200,
+                height: 48,
+            }}
+            />
+            <h2 style={{ textAlign: "center" }}>欢迎登录MyCampus！</h2>
             <Form onFinish={handleLogin} layout="vertical">
-                <Form.Item
-                    label="用户名"
-                    name="userName"
-                    rules={[{ required: true, message: "请输入用户名" }]}
+              <Form.Item
+                label="用户名"
+                name="userName"
+                rules={[{ required: true, message: "请输入用户名" }]}
+              >
+                <Input />
+              </Form.Item>
+      
+              <Form.Item
+                label="密码"
+                name="password"
+                rules={[{ required: true, message: "请输入密码" }]}
+              >
+                <Input.Password />
+              </Form.Item>
+      
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loading}
+                block
+                style={{ backgroundColor: "#ff9214", borderColor: "#ff9214" }}
                 >
-                    <Input />
-                </Form.Item>
+                登录
+            </Button>
 
-                <Form.Item
-                    label="密码"
-                    name="password"
-                    rules={[{ required: true, message: "请输入密码" }]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={loading}
-                    block
-                >
-                    登录
-                </Button>
             </Form>
-
-            {/* 错误信息提示 - 一行显示 */}
+      
             {errorMsg && (
-                <div style={{
-                    color: '#ff4d4f',
-                    backgroundColor: '#fff2f0',
-                    border: '1px solid #ffccc7',
-                    padding: '8px 12px',
-                    borderRadius: '4px',
-                    marginBottom: '16px',
-                    fontSize: '14px',
-                    textAlign: 'center',
-                    marginTop: '16px'
-                }}>
-                    ❌ {errorMsg}
-                </div>
+              <div
+                style={{
+                  color: "#ff4d4f",
+                  backgroundColor: "#fff2f0",
+                  border: "1px solid #ffccc7",
+                  padding: "8px 12px",
+                  borderRadius: "4px",
+                  marginBottom: "16px",
+                  fontSize: "14px",
+                  textAlign: "center",
+                  marginTop: "16px"
+                }}
+              >
+                ❌ {errorMsg}
+              </div>
             )}
-
+      
             <div style={{ textAlign: "center", marginTop: 16 }}>
-                <Text>没有账号？ </Text>
-                <Link onClick={() => navigate("/register")}>去注册</Link>
+              <Text>没有账号？ </Text>
+              <Link onClick={() => navigate("/register")}>去注册</Link>
             </div>
+          </div>
         </div>
-    );
-}
+      );
+    }      

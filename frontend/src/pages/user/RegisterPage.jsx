@@ -41,7 +41,46 @@ export default function RegisterPage() {
     };
 
     return (
-        <div style={{ width: 360, margin: "80px auto" }}>
+        <div
+          style={{
+            
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundImage: "url('/imgs/login-bg.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundColor: "transparent", // 避免底层灰色显示
+          }}
+        >
+            <div
+            style={{
+                position: "relative",
+              width: 320,
+              padding: 24,
+              borderRadius: 8,
+              backgroundColor: "rgba(255, 255, 255, 0.8)", // 半透明白色
+              boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+            }}
+          >
+            <img
+            src="/imgs/美食.svg"   // public 目录下路径以 / 开头
+            alt="美食"
+            style={{
+                position: "absolute",
+                top: -30,
+                right: -60,
+                width: 200,
+                height: 48,
+            }}
+            />
             <h2 style={{ textAlign: "center" }}>注册</h2>
             <Form
                 layout="vertical"
@@ -102,6 +141,7 @@ export default function RegisterPage() {
                     htmlType="submit"
                     block
                     loading={loading}
+                    style={{ backgroundColor: "#ff9214", borderColor: "#ff9214" }}
                 >
                     注册
                 </Button>
@@ -111,6 +151,7 @@ export default function RegisterPage() {
                 <Text>已有账号？ </Text>
                 <Link onClick={() => navigate("/login")}>去登录</Link>
             </div>
+        </div>
         </div>
     );
 }

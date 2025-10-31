@@ -20,6 +20,10 @@ import { createDish } from "../../api/dish";
 const { TextArea } = Input;
 const { Option } = Select;
 
+const categories = ["川菜", "本帮菜", "快餐", "主食", "汤", "小吃", "粉面", "凉菜", "家常菜"];
+const restaurants = ["百景园食堂", "东园食堂", "西园食堂", "学子餐厅", "西一食堂一楼", "集锦园食堂一楼", "东一食堂一楼", "西一食堂二楼清真食堂", "西二食堂二楼", "东一食堂二楼", "喻园餐厅", "西一民族食堂","百景园一楼", "百惠园"];
+
+
 
 export default function UploadDishPage() {
   const navigate = useNavigate();
@@ -65,19 +69,36 @@ export default function UploadDishPage() {
       <Navbar />
       <div
         style={{
-          backgroundColor: "#fff",
-          minHeight: "100vh",
-          paddingTop: "100px",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-start",
+          alignItems: "center",
+          backgroundImage: "url('/imgs/login-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundColor: "transparent", // 避免底层灰色显示
         }}
       >
+        <div style={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center", 
+          alignItems: "center",
+          padding: "40px 20px",
+          position: "relative",
+          marginTop: "80px", // 添加顶部外边距
+        }}>
         <div
           style={{
             width: "800px",  // 固定宽度
             margin: "0 auto",
-            padding: "40px 60px",
+            padding: "20px 60px",
             borderRadius: "12px",
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
             background: "#fff",
@@ -114,10 +135,10 @@ export default function UploadDishPage() {
                   name="restaurant"
                   rules={[{ required: true, message: "请选择餐厅" }]}
                 >
-                  <Select placeholder="选择餐厅">
-                    <Option value="东一食堂">东一食堂</Option>
-                    <Option value="东二食堂">东二食堂</Option>
-                    <Option value="西一食堂">西一食堂</Option>
+                        <Select placeholder="选择餐厅">
+                      {restaurants.map(restaurant => (
+                <Option key={restaurant} value={restaurant}>{restaurant}</Option>
+              ))}
                   </Select>
                 </Form.Item>
               </Col>
@@ -132,10 +153,9 @@ export default function UploadDishPage() {
                   rules={[{ required: true, message: "请选择分类" }]}
                 >
                   <Select placeholder="选择分类">
-                    <Option value="川菜">川菜</Option>
-                    <Option value="粤菜">粤菜</Option>
-                    <Option value="湘菜">湘菜</Option>
-                    <Option value="鲁菜">鲁菜</Option>
+                  {categories.map(category => (
+          <Option key={category} value={category}>{category}</Option>
+        ))}
                   </Select>
                 </Form.Item>
               </Col>
@@ -156,34 +176,34 @@ export default function UploadDishPage() {
               </Col>
             </Row>
 
-{/* 第三行：评分 + 是否可供应 */}
-<Row gutter={24} align="middle">
-  <Col span={12}>
-  <Form.Item label="评分" name="rating" initialValue={0}>
-  <Rate
-    allowHalf
-    value={ratingValue}
-    onChange={(value) => {
-      setRatingValue(value);
-      form.setFieldValue('rating', value);
-    }}
-  />
-  <span style={{ marginLeft: 8 }}>
-    {ratingValue ? `${ratingValue}星` : "未评分"}
-  </span>
-</Form.Item>
-  </Col>
+            {/* 第三行：评分 + 是否可供应 */}
+            <Row gutter={24} align="middle">
+              <Col span={12}>
+              <Form.Item label="评分" name="rating" initialValue={0}>
+              <Rate
+                allowHalf
+                value={ratingValue}
+                onChange={(value) => {
+                  setRatingValue(value);
+                  form.setFieldValue('rating', value);
+                }}
+              />
+              <span style={{ marginLeft: 8 }}>
+                {ratingValue ? `${ratingValue}星` : "未评分"}
+              </span>
+            </Form.Item>
+              </Col>
 
-  <Col span={12}>
-    <Form.Item
-      label="是否可供应"
-      name="isAvailable"
-      valuePropName="checked"
-    >
-      <Switch defaultChecked />
-    </Form.Item>
-  </Col>
-</Row>
+              <Col span={12}>
+                <Form.Item
+                  label="是否可供应"
+                  name="isAvailable"
+                  valuePropName="checked"
+                >
+                  <Switch defaultChecked />
+                </Form.Item>
+              </Col>
+            </Row>
 
 
 
@@ -206,7 +226,8 @@ export default function UploadDishPage() {
             </Form.Item>
 
             <Form.Item> 
-              <Button type="primary" htmlType="submit" block>
+              <Button type="primary" htmlType="submit" block
+              style={{ backgroundColor: "rgb(252, 140, 59)", borderColor: "rgb(252, 140, 59)" }}>
                  上传菜品 
                  </Button> 
             </Form.Item>
@@ -216,7 +237,8 @@ export default function UploadDishPage() {
 
           </Form>
         </div>
-      </div>
-    </>
+        </div>
+        </div>
+          </>
   );
 }

@@ -36,6 +36,9 @@ export default function DishCard({ dish, onUpdate }) {
             ? `${dish.restaurant} - ${dish.dishName}`
             : dish.dishName}
         </div>
+        <div className="dish-card-rating">
+    ⭐ {dish.rating?.toFixed(1) ?? "暂无评分"}
+        </div>
       </div>
 
       {/* 弹窗 */}
@@ -91,7 +94,8 @@ export default function DishCard({ dish, onUpdate }) {
             type="primary"
             onClick={handleSubmitRating}
             loading={submitting}
-            style={{ marginTop: 12 }}
+            style={{ marginTop: 12 ,backgroundColor: "rgb(252, 140, 59)", borderColor: "rgb(252, 140, 59)" }}
+            
           >
             提交评分
           </Button>

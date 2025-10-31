@@ -163,7 +163,7 @@ export default function LoginPage() {
                 htmlType="submit"
                 loading={loading}
                 block
-                style={{ backgroundColor: "#ff9214", borderColor: "#ff9214" }}
+                style={{ backgroundColor: "rgb(252, 140, 59)", borderColor: "rgb(252, 140, 59)" }}
                 >
                 登录
             </Button>

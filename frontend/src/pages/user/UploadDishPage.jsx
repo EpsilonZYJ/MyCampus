@@ -13,7 +13,7 @@ import {
   Row,
   Col,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, ArrowLeftOutlined } from "@ant-design/icons"; // 添加 ArrowLeftOutlined
 import { useNavigate } from "react-router-dom";
 import { createDish } from "../../api/dish";
 
@@ -102,8 +102,26 @@ export default function UploadDishPage() {
             borderRadius: "12px",
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
             background: "#fff",
+            position:"relative",
           }}
         >
+          <Button
+            type="text"
+            icon={<ArrowLeftOutlined />}
+            onClick={() => navigate("/food")}
+            style={{
+              position: "absolute",
+              top: "20px",
+              left: "20px",
+              color: "#fff",
+              border: "none",
+              boxShadow: "none",
+              backgroundColor: "rgb(252, 140, 59)", 
+              borderColor: "rgb(252, 140, 59)" 
+            }}
+          >
+            返回
+          </Button>
           <h1
             style={{
               textAlign: "center",

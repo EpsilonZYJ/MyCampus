@@ -113,4 +113,21 @@ public interface IUserService {
      * @return 更新后的用户对象
      */
     User approveRunner(String userId, Boolean approved);
+    
+    /**
+     * 用户间转账
+     * @param fromUserId 转出用户ID
+     * @param toUserId 转入用户ID
+     * @param amount 转账金额
+     * @return 转出用户对象
+     */
+    User transferBalance(String fromUserId, String toUserId, java.math.BigDecimal amount);
+    
+    /**
+     * 用户申请提现
+     * @param userId 用户ID
+     * @param amount 提现金额
+     * @return 更新后的用户对象
+     */
+    User withdrawBalance(String userId, java.math.BigDecimal amount);
 }

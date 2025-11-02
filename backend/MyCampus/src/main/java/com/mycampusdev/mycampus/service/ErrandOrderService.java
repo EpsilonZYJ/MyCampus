@@ -1,10 +1,12 @@
 package com.mycampusdev.mycampus.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mycampusdev.mycampus.pojo.ErrandOrder;
 import com.mycampusdev.mycampus.pojo.ErrandOrder.OrderStatus;
@@ -24,7 +26,11 @@ public class ErrandOrderService implements IErrandOrderService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ITransactionService transactionService;
+
     @Override
+    @Transactional
     public ErrandOrder createOrder(ErrandOrder order) {
         // 添加调试日志
         System.out.println("=== ErrandOrderService.createOrder Debug ===");
@@ -42,14 +48,41 @@ public class ErrandOrderService implements IErrandOrderService {
         
         System.out.println("Customer found: " + customer.getUserName());
         
+        // 检查余额是否充足
+        BigDecimal orderAmount = order.getReward();
+        if (customer.getBalance().compareTo(orderAmount) < 0) {
+            throw new RuntimeException("余额不足，请先充值。当前余额: " + customer.getBalance() + 
+                                     "，订单金额: " + orderAmount);
+        }
+        
+        // 扣除客户余额
+        BigDecimal balanceBefore = customer.getBalance();
+        customer.setBalance(balanceBefore.subtract(orderAmount));
+        userRepository.save(customer);
+        BigDecimal balanceAfter = customer.getBalance();
+        
+        System.out.println("Balance deducted: before=" + balanceBefore + ", after=" + balanceAfter);
+        
         // 设置客户姓名
         order.setCustomerName(customer.getUserName());
         System.out.println("Set customerName to: " + order.getCustomerName());
         order.setStatus(OrderStatus.PENDING);
         
+        // 保存订单
         ErrandOrder savedOrder = errandOrderRepository.save(order);
         System.out.println("Order saved with ID: " + savedOrder.getId());
         System.out.println("Saved order customerName: " + savedOrder.getCustomerName());
+        
+        // 记录支付交易
+        transactionService.recordOrderPayment(
+            order.getCustomerId(), 
+            savedOrder.getId(), 
+            orderAmount, 
+            balanceBefore, 
+            balanceAfter
+        );
+        
+        System.out.println("Payment transaction recorded");
         System.out.println("=== End Debug ===");
         
         return savedOrder;
@@ -127,6 +160,7 @@ public class ErrandOrderService implements IErrandOrderService {
     }
 
     @Override
+    @Transactional
     public ErrandOrder completeOrder(String orderId, Double rating, String comment) {
         ErrandOrder order = getOrderById(orderId);
         
@@ -146,7 +180,7 @@ public class ErrandOrderService implements IErrandOrderService {
             order.setCustomerComment(comment);
         }
         
-        // 更新跑腿员的统计信息
+        // 更新跑腿员的统计信息并结算款项
         if (order.getRunnerId() != null) {
             User runner = userRepository.findById(order.getRunnerId()).orElse(null);
             if (runner != null && runner.getRunnerProfile() != null) {
@@ -161,12 +195,26 @@ public class ErrandOrderService implements IErrandOrderService {
                     profile.setRating(newRating);
                 }
                 
-                // 更新收入
+                // 更新收入统计
                 if (order.getReward() != null) {
                     profile.setTotalEarnings(profile.getTotalEarnings().add(order.getReward()));
                 }
                 
+                // 给跑腿员结算款项（增加余额）
+                BigDecimal runnerBalanceBefore = runner.getBalance();
+                runner.setBalance(runnerBalanceBefore.add(order.getReward()));
+                BigDecimal runnerBalanceAfter = runner.getBalance();
                 userRepository.save(runner);
+                
+                // 记录结算交易
+                transactionService.recordOrderSettlement(
+                    order.getRunnerId(),
+                    order.getCustomerId(),
+                    orderId,
+                    order.getReward(),
+                    runnerBalanceBefore,
+                    runnerBalanceAfter
+                );
             }
         }
         
@@ -174,6 +222,7 @@ public class ErrandOrderService implements IErrandOrderService {
     }
 
     @Override
+    @Transactional
     public ErrandOrder cancelOrder(String orderId) {
         ErrandOrder order = getOrderById(orderId);
         
@@ -181,6 +230,24 @@ public class ErrandOrderService implements IErrandOrderService {
         if (order.getStatus() == OrderStatus.COMPLETED || order.getStatus() == OrderStatus.CANCELLED) {
             throw new RuntimeException("Cannot cancel order with status: " + order.getStatus());
         }
+        
+        // 取消订单时需要退款给客户
+        User customer = userRepository.findById(order.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        
+        BigDecimal balanceBefore = customer.getBalance();
+        customer.setBalance(balanceBefore.add(order.getReward()));
+        BigDecimal balanceAfter = customer.getBalance();
+        userRepository.save(customer);
+        
+        // 记录退款交易
+        transactionService.recordOrderRefund(
+            order.getCustomerId(),
+            orderId,
+            order.getReward(),
+            balanceBefore,
+            balanceAfter
+        );
         
         order.setStatus(OrderStatus.CANCELLED);
         return errandOrderRepository.save(order);

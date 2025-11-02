@@ -36,6 +36,7 @@ const Navbar = () => {
         if (currentRole === ROLES.STUDENT) {
             items.push({ key: "/", label: "美食广场", roles: [ROLES.STUDENT] });
             items.push({ key: "/errand-orders", label: "跑腿订单", roles: [ROLES.STUDENT] });
+            items.push({ key: "/balance", label: "我的余额", roles: [ROLES.STUDENT] });
             items.push({ key: "/apply-runner", label: "申请跑腿员", roles: [ROLES.STUDENT] });
         }
 
@@ -47,6 +48,7 @@ const Navbar = () => {
         // 只有当前角色是管理员时才显示管理员菜单
         if (currentRole === ROLES.ADMIN) {
             items.push({ key: "/admin/runners", label: "跑腿员审核", roles: [ROLES.ADMIN] });
+            items.push({ key: "/admin/withdrawals", label: "提现审核", roles: [ROLES.ADMIN] });
         }
 
         return items;

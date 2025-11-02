@@ -244,4 +244,46 @@ public class UserController {
         User updatedUser = userService.approveRunner(userId, approved);
         return ResponseMessage.success(updatedUser);
     }
+    
+    /**
+     * 用户间转账
+     * POST /api/users/{fromUserId}/transfer
+     * Body: {"toUserId": "xxx", "amount": 10.0}
+     */
+    @PostMapping("/{fromUserId}/transfer")
+    public ResponseMessage<User> transferBalance(
+            @PathVariable String fromUserId,
+            @RequestBody TransferRequest request) {
+        User updatedUser = userService.transferBalance(fromUserId, request.getToUserId(), request.getAmount());
+        return ResponseMessage.success(updatedUser);
+    }
+    
+    /**
+     * 用户申请提现
+     * POST /api/users/{userId}/withdraw
+     * Body: {"amount": 100.0}
+     */
+    @PostMapping("/{userId}/withdraw")
+    public ResponseMessage<User> withdrawBalance(
+            @PathVariable String userId,
+            @Valid @RequestBody BalanceOperationRequest request) {
+        User updatedUser = userService.withdrawBalance(userId, request.getAmount());
+        return ResponseMessage.success(updatedUser);
+    }
+    
+    /**
+     * 数据传输对象：转账请求
+     */
+    public static class TransferRequest {
+        @NotBlank(message = "Target user ID cannot be empty")
+        private String toUserId;
+        
+        @NotNull(message = "Amount cannot be null")
+        private BigDecimal amount;
+        
+        public String getToUserId() { return toUserId; }
+        public void setToUserId(String toUserId) { this.toUserId = toUserId; }
+        public BigDecimal getAmount() { return amount; }
+        public void setAmount(BigDecimal amount) { this.amount = amount; }
+    }
 }

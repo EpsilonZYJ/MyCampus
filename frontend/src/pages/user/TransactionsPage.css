@@ -1,0 +1,417 @@
+.transactions-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.8rem;
+}
+
+.title-text h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #2d3748;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0 0;
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+/* 统计卡片 */
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: white;
+}
+
+.stat-card.income .stat-icon {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.stat-card.expense .stat-icon {
+  background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+}
+
+.stat-card.net .stat-icon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #718096;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2d3748;
+}
+
+/* 筛选器 */
+.filters-container {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.filters-header h3 {
+  margin: 0;
+  color: #2d3748;
+  font-size: 1.2rem;
+}
+
+.btn-reset {
+  padding: 0.5rem 1rem;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.btn-reset:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.filter-group select,
+.filter-group input {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* 交易列表 */
+.transactions-list {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.list-header h3 {
+  margin: 0;
+  color: #2d3748;
+  font-size: 1.2rem;
+}
+
+.count {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.loading-container,
+.empty-container {
+  text-align: center;
+  padding: 3rem;
+  color: #a0aec0;
+}
+
+.loading-container i,
+.empty-container i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.loading-container p,
+.empty-container p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* 交易表格 */
+.transactions-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.transaction-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.transaction-row:hover {
+  border-color: #cbd5e0;
+  background: #f7fafc;
+}
+
+.transaction-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.transaction-type {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.type-badge,
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* 交易类型样式 */
+.type-badge.type-recharge {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.type-badge.type-transfer-in {
+  background: #bee3f8;
+  color: #2c5282;
+}
+
+.type-badge.type-transfer-out {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.type-badge.type-payment {
+  background: #feebc8;
+  color: #7c2d12;
+}
+
+.type-badge.type-refund {
+  background: #e9d8fd;
+  color: #44337a;
+}
+
+.type-badge.type-withdrawal {
+  background: #fbb6ce;
+  color: #702459;
+}
+
+.type-badge.type-earning {
+  background: #b2f5ea;
+  color: #234e52;
+}
+
+/* 交易状态样式 */
+.status-badge.status-pending {
+  background: #fef5e7;
+  color: #b7791f;
+}
+
+.status-badge.status-completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.status-failed {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.status-cancelled {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.transaction-number {
+  font-size: 0.9rem;
+  color: #4a5568;
+  font-family: monospace;
+}
+
+.transaction-time {
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+.transaction-desc {
+  font-size: 0.9rem;
+  color: #2d3748;
+  margin-top: 0.25rem;
+}
+
+.transaction-remark {
+  font-size: 0.85rem;
+  color: #718096;
+  font-style: italic;
+}
+
+.transaction-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.amount.amount-income {
+  color: #38a169;
+}
+
+.amount.amount-expense {
+  color: #e53e3e;
+}
+
+.balance-after {
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .transactions-container {
+    padding: 1rem;
+  }
+
+  .stats-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .transaction-amount {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .amount {
+    font-size: 1.3rem;
+  }
+}
+
+

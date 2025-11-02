@@ -5,8 +5,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import FoodPage from "./pages/user/FoodPage";
 import ErrandOrderPage from "./pages/user/ErrandOrderPage";
 import ApplyRunnerPage from "./pages/user/ApplyRunnerPage";
+import BalancePage from "./pages/user/BalancePage";
+import TransactionsPage from "./pages/user/TransactionsPage";
 import RunnerOrderPage from "./pages/runner/RunnerOrderPage";
 import AdminRunnerApprovalPage from "./pages/admin/AdminRunnerApprovalPage";
+import WithdrawalApprovalPage from "./pages/admin/WithdrawalApprovalPage";
 import UploadDishPage from "./pages/user/UploadDishPage";
 import LoginPage from "./pages/user/LoginPage";
 import RegisterPage from "./pages/user/RegisterPage";
@@ -53,6 +56,22 @@ export default function App() {
                     </ProtectedRoute>
                 }
             />
+            <Route
+                path="/balance"
+                element={
+                    <ProtectedRoute allowedRoles={[ROLES.STUDENT]}>
+                        <BalancePage />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/transactions"
+                element={
+                    <ProtectedRoute allowedRoles={[ROLES.STUDENT]}>
+                        <TransactionsPage />
+                    </ProtectedRoute>
+                }
+            />
 
             {/* 跑腿员专属路由 */}
             <Route
@@ -70,6 +89,14 @@ export default function App() {
                 element={
                     <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
                         <AdminRunnerApprovalPage />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/admin/withdrawals"
+                element={
+                    <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+                        <WithdrawalApprovalPage />
                     </ProtectedRoute>
                 }
             />

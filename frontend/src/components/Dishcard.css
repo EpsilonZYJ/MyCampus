@@ -1,8 +1,14 @@
 ﻿/* dish-card.css */
-
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Dancing+Script&family=Shadows+Into+Light&display=swap');
+@font-face {
+  font-family: 'FZShouXieTi';
+  src: url('/fonts/FZShouXieTi.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /* 外层容器 */
 .dish-card {
-  width: 200px; 
+  width: 240px; 
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -30,6 +36,7 @@
   
   /* 菜品名称 */
   .dish-card-name {
+    font-family: "Indie Flower", "Microsoft YaHei", cursive;
     margin-top: 10px;
     font-size: 16px;
     font-weight: 500;

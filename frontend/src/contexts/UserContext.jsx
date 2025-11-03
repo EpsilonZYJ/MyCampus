@@ -137,6 +137,22 @@ export function UserProvider({ children }) {
         return currentUser.roles.includes(role);
     };
 
+    // 更新用户信息（同步到localStorage和Context）
+    const updateUser = (updatedUserData) => {
+        console.log("[UserContext] Updating user data:", updatedUserData);
+        
+        // 合并更新的数据
+        const newUser = { ...currentUser, ...updatedUserData };
+        
+        // 更新Context状态
+        setCurrentUser(newUser);
+        
+        // 同步到localStorage
+        localStorage.setItem('user', JSON.stringify(newUser));
+        
+        console.log("[UserContext] User data updated successfully");
+    };
+
     // 登出功能
     const logout = () => {
         console.log("[Logout] User logout started");
@@ -166,6 +182,7 @@ export function UserProvider({ children }) {
         hasRole,
         logout,
         isLoggedIn,
+        updateUser, // 新增：提供更新用户信息的方法
     };
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

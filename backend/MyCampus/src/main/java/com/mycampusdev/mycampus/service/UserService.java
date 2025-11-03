@@ -1,6 +1,7 @@
 package com.mycampusdev.mycampus.service;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import com.mycampusdev.mycampus.dto.UserRegisterRequest;
@@ -26,6 +28,9 @@ public class UserService implements IUserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ITransactionService transactionService;
 
     // TODO: 注入一个密码编码器，例如 BCryptPasswordEncoder
     // import org.springframework.security.crypto.password.PasswordEncoder;
@@ -158,25 +163,34 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User addBalance(String userId, java.math.BigDecimal amount) {
+    @Transactional
+    public User addBalance(String userId, BigDecimal amount) {
         User user = getUserById(userId);
         
         // 验证金额必须为正数
-        if (amount == null || amount.compareTo(java.math.BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new RuntimeException("Amount must be positive");
         }
         
         // 增加余额
-        user.setBalance(user.getBalance().add(amount));
-        return userRepository.save(user);
+        BigDecimal balanceBefore = user.getBalance();
+        user.setBalance(balanceBefore.add(amount));
+        BigDecimal balanceAfter = user.getBalance();
+        User savedUser = userRepository.save(user);
+        
+        // 记录充值交易
+        transactionService.recordRecharge(userId, amount, balanceBefore, balanceAfter);
+        
+        return savedUser;
     }
 
     @Override
-    public User deductBalance(String userId, java.math.BigDecimal amount) {
+    @Transactional
+    public User deductBalance(String userId, BigDecimal amount) {
         User user = getUserById(userId);
         
         // 验证金额必须为正数
-        if (amount == null || amount.compareTo(java.math.BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new RuntimeException("Amount must be positive");
         }
         
@@ -217,6 +231,82 @@ public class UserService implements IUserService {
         }
         
         return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public User transferBalance(String fromUserId, String toUserId, BigDecimal amount) {
+        // 验证金额必须为正数
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Transfer amount must be positive");
+        }
+        
+        // 不能给自己转账
+        if (fromUserId.equals(toUserId)) {
+            throw new RuntimeException("Cannot transfer to yourself");
+        }
+        
+        // 获取转出用户和转入用户
+        User fromUser = getUserById(fromUserId);
+        User toUser = getUserById(toUserId);
+        
+        // 检查转出用户余额是否充足
+        if (fromUser.getBalance().compareTo(amount) < 0) {
+            throw new RuntimeException("Insufficient balance for transfer. Current balance: " + 
+                                     fromUser.getBalance() + ", Required: " + amount);
+        }
+        
+        // 执行转账
+        BigDecimal fromBalanceBefore = fromUser.getBalance();
+        fromUser.setBalance(fromBalanceBefore.subtract(amount));
+        BigDecimal fromBalanceAfter = fromUser.getBalance();
+        
+        BigDecimal toBalanceBefore = toUser.getBalance();
+        toUser.setBalance(toBalanceBefore.add(amount));
+        BigDecimal toBalanceAfter = toUser.getBalance();
+        
+        // 保存用户
+        userRepository.save(fromUser);
+        userRepository.save(toUser);
+        
+        // 记录转账交易（会创建两条记录）
+        transactionService.recordTransfer(
+            fromUserId, toUserId, amount,
+            fromBalanceBefore, fromBalanceAfter,
+            toBalanceBefore, toBalanceAfter
+        );
+        
+        log.info("Transfer completed: from {} to {}, amount={}", fromUserId, toUserId, amount);
+        return fromUser;
+    }
+
+    @Override
+    @Transactional
+    public User withdrawBalance(String userId, BigDecimal amount) {
+        User user = getUserById(userId);
+        
+        // 验证金额必须为正数
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Withdrawal amount must be positive");
+        }
+        
+        // 检查余额是否充足
+        if (user.getBalance().compareTo(amount) < 0) {
+            throw new RuntimeException("Insufficient balance for withdrawal. Current balance: " + 
+                                     user.getBalance() + ", Required: " + amount);
+        }
+        
+        // 暂扣余额（待审核通过后才真正提现）
+        BigDecimal balanceBefore = user.getBalance();
+        user.setBalance(balanceBefore.subtract(amount));
+        BigDecimal balanceAfter = user.getBalance();
+        User savedUser = userRepository.save(user);
+        
+        // 记录提现交易（状态为PENDING，需要管理员审核）
+        transactionService.recordWithdraw(userId, amount, balanceBefore, balanceAfter);
+        
+        log.info("Withdrawal request created for user {}: amount={}", userId, amount);
+        return savedUser;
     }
 
     /**

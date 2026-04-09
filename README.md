@@ -1,4 +1,4 @@
-# hust-softeware-engineering
+# hust-software-engineering
 
 ## 项目成员
 
